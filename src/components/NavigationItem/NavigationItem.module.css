@@ -1,0 +1,24 @@
+.list-item {
+    align-self: center;
+    padding: 12px 10px;
+    position: relative;
+}
+  
+.list-item,
+.list-item a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+  
+.list-item a {
+    cursor: pointer;
+}
+
+.list-sub-menu .list-item .navigation-item a:not(:last-child) {
+    border-bottom: 1px solid #FFFFFF;
+}
+/*
+.active-navigation-item {
+    color: #034a91 !important;
+}*/
