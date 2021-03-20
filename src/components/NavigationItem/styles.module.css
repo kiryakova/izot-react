@@ -15,10 +15,10 @@
     cursor: pointer;
 }
 
-.list-sub-menu .list-item .navigation-item a:not(:last-child) {
+li ul .list-item:not(:last-child) {
     border-bottom: 1px solid #FFFFFF;
 }
-/*
+
 .active-navigation-item {
     color: #034a91 !important;
-}*/
+}
