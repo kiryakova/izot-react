@@ -3,6 +3,7 @@ import style from './styles.module.css';
 import * as productsService from '../../services/productsService';
 
 import { Component } from 'react';
+
 import Product from '../Product';
 import NavigationCategories from '../NavigationCategories';
 

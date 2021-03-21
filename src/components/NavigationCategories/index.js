@@ -1,17 +1,36 @@
-import cashRegisters from '../../images/cash-registers.jpg';
-import electronicScales from '../../images/electronic-scales.jpg';
-import fiscalPrinters from '../../images/fiscal-printers.jpg';
+import {CATEGORIES_MENU_ITEMS } from './CategoriesMenuItems';
+
 import style from './styles.module.css';
 
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+
+import NavigationItem from '../NavigationItem';
 
 const NavigationCategories = () => {
+    const [currentCategoryItem = 1, setCurrentCategoryItem] = useState();
+    
+    const menuItemClickHandler = (id) => {
+        setCurrentCategoryItem(id);
+    }
+
     return (
             <ul className={style['container-menu']}>
-                <li><NavLink activeClassName={style['active-item']} to="/products/category/all"><img src={cashRegisters} alt="" />All Products</NavLink></li>
-                <li><NavLink activeClassName={style['active-item']} to="/products/category/Cash Registers"><img src={cashRegisters} alt="" />Cash Registers</NavLink></li>
-                <li><NavLink activeClassName={style['active-item']} to="/products/category/Electronic Scales"><img src={electronicScales} alt="" />Electronic Scales</NavLink></li>
-                <li><NavLink activeClassName={style['active-item']} to="/products/category/Fiscal Printers"><img src={fiscalPrinters} alt="" />Fiscal Printers</NavLink></li>
+                {CATEGORIES_MENU_ITEMS.map(x => 
+                    <NavigationItem 
+                        key={x.id}
+                        id={x.id}
+                        href={x.href}
+                        image={x.image}
+                        liClassName='category-list-item'
+                        linkClassName='active-category-item'
+                        isSelected={x.id == currentCategoryItem}
+                        onClick={menuItemClickHandler}
+                    >
+                        {x.text}
+                    </NavigationItem>
+                
+                )}
+                
             </ul>
     );
 };

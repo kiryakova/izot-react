@@ -1,8 +1,18 @@
+import { HEADER_MENU_ITEMS } from './HeaderMenuItems';
 import logo from '../../logo.jpg';
 import style from './styles.module.css';
+
+import { useState } from 'react';
+
 import NavigationItem from '../NavigationItem';
 
 const Header = () => {
+    const [currentHeaderItem = 1, setCurrentHeaderItem] = useState();
+    
+    const menuItemClickHandler = (id) => {
+        setCurrentHeaderItem(id);
+    }
+
     return(
         <header>
             <nav className={style.nav}>
@@ -10,22 +20,22 @@ const Header = () => {
                     <img src={logo}/>
                 </div>
                 <ul className={style['list-menu']}>
-                    <NavigationItem itemTitle='Products' href="/products"></NavigationItem>
-                    <NavigationItem itemTitle='Contacts' href="/contacts"></NavigationItem>
-                    <NavigationItem itemTitle='logIn' href="/logIn"><i class="fas fa-sign-in-alt"></i>&#32;</NavigationItem>
 
-                    <li className={style['list-item']}>Administration
-                        <ul className={style['list-sub-menu']}>
-                            <NavigationItem itemTitle='Add Product' href="/products/add"></NavigationItem>
-                        </ul>
-                    </li>
-                    
-                    <li className={style['list-item']}>userName
-                        <ul className={style['list-sub-menu']}>
-                            <NavigationItem itemTitle='Profile' href="/profile"></NavigationItem>
-                            <NavigationItem itemTitle='LogOut' href="/logOut"><i class="fas fa-sign-out-alt"></i>&#32;</NavigationItem>
-                        </ul>
-                    </li>
+                {HEADER_MENU_ITEMS.map(x => 
+                    <NavigationItem 
+                        key={x.id}
+                        id={x.id}
+                        href={x.href}
+                        image={x.image}
+                        liClassName='list-item'
+                        linkClassName='active-navigation-item'
+                        isSelected={x.id == currentHeaderItem}
+                        onClick={menuItemClickHandler}
+                    >
+                        {x.text}
+                    </NavigationItem>
+                
+                )}
 
                 </ul>
             </nav>
