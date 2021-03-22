@@ -29,7 +29,7 @@ const Header = () => {
                         image={x.image}
                         liClassName='list-item'
                         linkClassName='active-navigation-item'
-                        isSelected={x.id == currentHeaderItem}
+                        isSelected={x.id === currentHeaderItem}
                         onClick={menuItemClickHandler}
                     >
                         {x.text}

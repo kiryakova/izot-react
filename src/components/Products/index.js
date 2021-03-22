@@ -2,57 +2,58 @@ import style from './styles.module.css';
 
 import * as productsService from '../../services/productsService';
 
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 
 import Product from '../Product';
 import NavigationCategories from '../NavigationCategories';
 
-class Products extends Component {
-    constructor(props) {
-        super(props);
+const Products = ({
+    match
+}) => {
+    const [products, setProducts] = useState([]);
+    const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
+    const [currentCategory, setCurrentCategory] = useState('All Products');
 
-        this.state = {
-            products: [],
-            currentCategory: 'all',
-        }
-
-    }
-
-    getProducts(category) {
+    const getProducts = (category, currentCategoryItem) => {
         productsService.getAll(category)
             .then(res => {
-
-                this.setState({ products: res, currentCategory: category })
+                setProducts(res);
+                setCurrentCategory(category);
+                menuItemClickHandler(currentCategoryItem);
             })
     }
 
-    componentDidMount() {
-        this.getProducts();
+    const menuItemClickHandler = (id) => {
+        setCurrentCategoryItem(id);
     }
 
-    componentDidUpdate(prevProps) {
-        const category = this.props.match.params.category;
+    useEffect(() => {
+        const category = match.params.category;
 
-        if (prevProps.match.params.category === category) {
+        if (category === currentCategory) {
             return;
         }
 
-        this.getProducts(category);
-    }
+        let categoryId = match.params.categoryId;
+        if(categoryId){
+            getProducts(category, categoryId);
+        }
+        else{
+            getProducts(category, currentCategoryItem);
+        }
+    })
 
-    render() {
-        return (
-            <div className={style.container}>
-                <NavigationCategories />
+    return (
+        <div className={style.container}>
+            <NavigationCategories menuItemClickHandler={menuItemClickHandler} currentCategoryItem={currentCategoryItem} />
 
-                <ul className={style['container-products']}>
-                    {this.state.products.map(x => 
-                        <Product key={x.id} {...x} />
-                    )}
-                </ul>
-            </div>
-        );
-    }
+            <ul className={style['container-products']}>
+                {products.map(x => 
+                    <Product key={x.id} {...x} categoryId={currentCategoryItem} />
+                )}
+            </ul>
+        </div>
+    );
 }
 
 export default Products;

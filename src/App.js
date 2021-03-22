@@ -18,7 +18,8 @@ function App() {
         <Route path="/" exact component={Products} />
         <Route path="/products" exact component={Products} />
         <Route path="/products/category/:category" exact component={Products} />
-        <Route path="/products/details/:productId" component={ProductDetails} />
+        <Route path="/products/:categoryId/category/:category" exact component={Products} />
+        <Route path="/products/:categoryId/:category/details/:productId" component={ProductDetails} />
         <Route path="/contacts" exact component={Contacts} />
         <Route path="/profile" exact component={Profile} />
         <Route component={ErrorPage} />

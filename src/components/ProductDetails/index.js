@@ -1,5 +1,10 @@
+import style from './styles.module.css';
+import styled from 'styled-components'
+
 import {useEffect, useState} from 'react';
 import * as productsService from '../../services/productsService';
+
+import { Link } from 'react-router-dom';
 
 const ProductDetails = ({
     match
@@ -11,14 +16,28 @@ const ProductDetails = ({
             .then(res => setProduct(res));
     }, []);
 
+    const Image = styled.img`
+                    width: 300px;
+                    height: 300px
+                    `
+
     return (
-        <section>
-            <h3>{product.name}</h3>
-            <p>Product counter: {product.likes} <a href="#"><button class="button"><i class="fas fa-heart"></i>
-                    Product</button></a>
-            </p>
-            <p><img src={product.imageURL} /></p>
-            <p>{product.description}</p>
+        <section className = {style['container-product-details']}>
+            <article className = {style['product-details']}>
+                <Image src={product.imageURL} />
+                <h5>{product.name}</h5>
+                <p>Category: {product.category}</p>
+                <h6>Price: <span>{product.price} лв.</span></h6>
+                
+                <p>Product counter: {product.likes} <a href="#"><button class="button"><i class="fas fa-heart"></i>
+                        Product</button></a>
+                </p>
+                
+                <p>{product.description}</p>/products/category/:category
+                <div className={style['button-wrapper']}>
+                    <Link to={`/products/${match.params.categoryId}/category/${product.category}`}><button>Back to products...</button></Link>
+                </div>
+            </article>
         </section>
     );
 };

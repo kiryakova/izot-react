@@ -1,18 +1,11 @@
 import {CATEGORIES_MENU_ITEMS } from './CategoriesMenuItems';
 
 import style from './styles.module.css';
-
-import { useState } from 'react';
-
 import NavigationItem from '../NavigationItem';
 
-const NavigationCategories = () => {
-    const [currentCategoryItem = 1, setCurrentCategoryItem] = useState();
-    
-    const menuItemClickHandler = (id) => {
-        setCurrentCategoryItem(id);
-    }
-
+const NavigationCategories = ({
+    menuItemClickHandler, currentCategoryItem
+}) => {
     return (
             <ul className={style['container-menu']}>
                 {CATEGORIES_MENU_ITEMS.map(x => 
@@ -23,7 +16,7 @@ const NavigationCategories = () => {
                         image={x.image}
                         liClassName='category-list-item'
                         linkClassName='active-category-item'
-                        isSelected={x.id == currentCategoryItem}
+                        isSelected={x.id === currentCategoryItem}
                         onClick={menuItemClickHandler}
                     >
                         {x.text}

@@ -1,5 +1,6 @@
 import style from './styles.module.css';
 
+import allProducts from '../../images/all-products.jpg';
 import cashRegisters from '../../images/cash-registers.jpg';
 import electronicScales from '../../images/electronic-scales.jpg';
 import fiscalPrinters from '../../images/fiscal-printers.jpg';
@@ -23,13 +24,16 @@ const NavigationItem = ({
         classes.push(style[linkClassName]);
     }
 
-    if(image == "cashRegisters") {
+    if(image === "all"){
+        image = <img src={allProducts} alt="" />
+    }
+    else if(image === "cashRegisters") {
         image = <img src={cashRegisters} alt="" />
     }
-    else if(image == "electronicScales") {
+    else if(image === "electronicScales") {
         image = <img src={electronicScales} alt="" />
     }
-    else if(image == "fiscalPrinters") {
+    else if(image === "fiscalPrinters") {
         image = <img src={fiscalPrinters} alt="" />
     }
 

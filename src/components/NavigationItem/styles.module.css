@@ -41,6 +41,20 @@ li ul .list-item:not(:last-child) {
   border-radius: 7px;
 }
 
+/*
+.category-list-item:nth-child(1) {
+  background-image: 
+  linear-gradient(
+    rgba(255, 255, 255, 0.7), 
+    rgba(255, 255, 255, 0.7)
+  ),
+  url('../../images/all-products.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  object-fit: contain;
+}
+*/
+
 .active-category-item {
   color: rgb(170, 12, 12) !important;
 }
