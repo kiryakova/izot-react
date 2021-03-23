@@ -16,7 +16,7 @@ const NavigationCategories = ({
                         image={x.image}
                         liClassName='category-list-item'
                         linkClassName='active-category-item'
-                        isSelected={x.id === currentCategoryItem}
+                        isSelected={x.id == currentCategoryItem}
                         onClick={menuItemClickHandler}
                     >
                         {x.text}

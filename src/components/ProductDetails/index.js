@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const ProductDetails = ({
     match
-}) => {
+}) => {console.log(match.params.categoryId);console.log("fff");
     let [product, setProduct] = useState({});
 
     useEffect(() => {

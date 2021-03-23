@@ -9,17 +9,17 @@ import NavigationCategories from '../NavigationCategories';
 
 const Products = ({
     match
-}) => {
+}) => {console.log(match.params.categoryId);
     const [products, setProducts] = useState([]);
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
-    const [currentCategory, setCurrentCategory] = useState('All Products');
+    const [currentCategory, setCurrentCategory] = useState('all');
 
     const getProducts = (category, currentCategoryItem) => {
         productsService.getAll(category)
             .then(res => {
                 setProducts(res);
                 setCurrentCategory(category);
-                menuItemClickHandler(currentCategoryItem);
+                setCurrentCategoryItem(currentCategoryItem);
             })
     }
 
@@ -30,18 +30,19 @@ const Products = ({
     useEffect(() => {
         const category = match.params.category;
 
-        if (category === currentCategory) {
+        if (category == currentCategory) {
             return;
         }
-
+        
         let categoryId = match.params.categoryId;
+
         if(categoryId){
             getProducts(category, categoryId);
         }
         else{
             getProducts(category, currentCategoryItem);
         }
-    })
+    }, [match])
 
     return (
         <div className={style.container}>

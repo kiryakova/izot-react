@@ -4,12 +4,6 @@
   justify-content: center;
 }
 
-.container-product-details a {
-  text-decoration: none;
-  color: #36A7E8;
-  font-weight: bolder;
-}
-
 .product-details {
   display: flex;
   flex-direction: column;

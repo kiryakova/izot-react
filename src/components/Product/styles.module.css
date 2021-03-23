@@ -12,6 +12,7 @@
 }
 
 .product-item {
+  margin: 10px 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

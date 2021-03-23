@@ -27,11 +27,11 @@
   padding: 30px;
   list-style: none;
 
-  display: flex;
-  justify-content: space-around;
-  /*display: grid;
+  /*display: flex;
+  justify-content: space-around;*/
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
-  grid-gap: 1.5rem 3rem;*/
+  grid-gap: 1.5rem 3rem;
 }
 

@@ -17,7 +17,6 @@ const NavigationItem = ({
     isSelected,
     onClick
 }) => {
-
     let classes = [];
 
     if (isSelected) {

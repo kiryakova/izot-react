@@ -51,7 +51,7 @@ header .nav img {
   padding: 12px 10px;
   position: relative;
   text-decoration: none;
-  color: #FFFFFF;
+  color: #034a91;
   font-weight: bold;
 }
 
@@ -60,5 +60,5 @@ header .nav img {
 }
 
 .active-navigation-item {
-  color: #034a91 !important;
+  color: #FFFFFF !important;
 }
