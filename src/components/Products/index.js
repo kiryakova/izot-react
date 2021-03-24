@@ -1,6 +1,6 @@
 import style from './styles.module.css';
 
-import * as productsService from '../../services/productsService';
+import * as productsService from '../../services/products-service';
 
 import { useEffect, useState } from 'react';
 

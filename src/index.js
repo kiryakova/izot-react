@@ -5,6 +5,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { requester } from './services/app-service.js';
+const nameDB = "articles";
+const apiKey = 'https://softuniproject-412dd.firebaseio.com/';
+requester.init(apiKey, nameDB, sessionStorage.getItem('token'));
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

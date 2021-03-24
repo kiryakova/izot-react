@@ -2,7 +2,7 @@ import style from './styles.module.css';
 import styled from 'styled-components'
 
 import {useEffect, useState} from 'react';
-import * as productsService from '../../services/productsService';
+import * as productsService from '../../services/products-service';
 
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const ProductDetails = ({
                         Product</button></a>
                 </p>
                 
-                <p>{product.description}</p>/products/category/:category
+                <p>{product.description}</p>
                 <div className={style['button-wrapper']}>
                     <Link to={`/products/${match.params.categoryId}/category/${product.category}`}><button>Back to products...</button></Link>
                 </div>

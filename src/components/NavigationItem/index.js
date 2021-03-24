@@ -5,7 +5,7 @@ import cashRegisters from '../../images/cash-registers.jpg';
 import electronicScales from '../../images/electronic-scales.jpg';
 import fiscalPrinters from '../../images/fiscal-printers.jpg';
 
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const NavigationItem = ({
     id,
@@ -38,9 +38,9 @@ const NavigationItem = ({
 
     return(
         <li className={style[liClassName]}>
-            <NavLink className={classes.join(' ')} to={href}  exact={true} onClick={() => onClick(id)} >
+            <Link className={classes.join(' ')} to={href}  exact={true} onClick={() => onClick(id)} >
             {image} {children}
-            </NavLink>
+            </Link>
         </li>
     );
 }
