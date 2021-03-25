@@ -1,5 +1,5 @@
 // Web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyCD45PTnf_N2AuSSSn-uD6bHxhhP0RoCrk",
     authDomain: "softuniproject-412dd.firebaseapp.com",
     databaseURL: "https://softuniproject-412dd.firebaseio.com",

@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { requester } from './services/app-service.js';
-const nameDB = "articles";
+const nameDB = "products";
 const apiKey = 'https://softuniproject-412dd.firebaseio.com/';
 requester.init(apiKey, nameDB, sessionStorage.getItem('token'));
 

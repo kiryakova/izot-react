@@ -13,8 +13,11 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
     let collectionUrl = apiKey + nameDB;
 
     //**Returns all elements from firebase database collection
-    const getAll = () => {
+    const getAll = (category = '') => {
+        collectionUrl = collectionUrl + ((category && category !== 'all') ? `?category=${category}` : '');
+
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
+        /*return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());*/
     };
 
     //**Based on id returns one element from firebase database collection

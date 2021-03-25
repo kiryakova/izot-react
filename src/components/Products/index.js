@@ -1,6 +1,7 @@
 import style from './styles.module.css';
 
 import * as productsService from '../../services/products-service';
+/*import { requester } from '../../services/app-service.js';*/
 
 import { useEffect, useState } from 'react';
 
@@ -9,12 +10,15 @@ import NavigationCategories from '../NavigationCategories';
 
 const Products = ({
     match
-}) => {console.log(match.params.categoryId);
+}) => {
     const [products, setProducts] = useState([]);
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
     const [currentCategory, setCurrentCategory] = useState('all');
 
     const getProducts = (category, currentCategoryItem) => {
+        /*
+        requester.dataSet.getAll(category)
+        */
         productsService.getAll(category)
             .then(res => {
                 setProducts(res);
@@ -42,6 +46,8 @@ const Products = ({
         else{
             getProducts(category, currentCategoryItem);
         }
+
+        console.log(products);
     }, [match])
 
     return (

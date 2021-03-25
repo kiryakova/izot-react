@@ -5,6 +5,7 @@ import style from './App.module.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Products from './components/Products';
+import ProductAdd from './components/ProductAdd';
 import ProductDetails from './components/ProductDetails';
 import Contacts from './components/Contacts';
 import Profile from './components/Profile';
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Products} />
         <Route path="/products" exact component={Products} />
+        <Route path="/products/add" exact component={ProductAdd} />
         <Route path="/products/category/:category" exact component={Products} />
         <Route path="/products/:categoryId/category/:category" exact component={Products} />
         <Route path="/products/:categoryId/:category/details/:productId" component={ProductDetails} />

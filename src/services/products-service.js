@@ -1,5 +1,7 @@
 const url = 'http://localhost:5000/products';
 
+/*let url ='https://softuniproject-412dd.firebaseio.com/articles.json';*/
+
 export const getAll = (category = '') => {
     let productsUrl = url + ((category && category !== 'all') ? `?category=${category}` : '');
 
