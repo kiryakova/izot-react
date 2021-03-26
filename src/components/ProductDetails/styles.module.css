@@ -1,5 +1,5 @@
 .container-product-details {
-  padding: 30px;
+  padding: 50px 0px;
   display: flex;
   justify-content: center;
 }
@@ -7,7 +7,7 @@
 .product-details {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -28,11 +28,11 @@
 }
 
 .product-details p {
-  color: rgb(61, 61, 61);
+  color: #3d3d3d;
 }
 
 .product-details h6 span {
-  color: rgb(170, 12, 12);
+  color: #aa0c0c;
 }
 
 .product-details .button-wrapper {

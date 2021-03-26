@@ -3,10 +3,14 @@ import { CATEGORIES } from '../../config/categories';
 import style from './styles.module.css';
 import styled from 'styled-components';
 
+import { requester } from '../../services/app-service.js';
+
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const ProductAdd = () => {
+const ProductAdd = ({
+    history
+}) => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
@@ -21,7 +25,14 @@ const ProductAdd = () => {
             setErrors({ ...errors, name: 'Product name should be at least 5 characters long!'});
         }
 
-        
+        const { name, price, description, category, imageURL } = e.target;
+
+        requester.dataSet.createEntity({'name': name.value, 'price' : price.value, 'description' : description.value, 'category' : category.value, 'imageURL' : imageURL.value})
+            .then(() => {
+                history.push('/products');
+            });
+
+        e.stopPropagation();
     };
 
     const onChangeHandler = (e) => {
@@ -29,12 +40,10 @@ const ProductAdd = () => {
     }
 
     return (
-        <div>
-                <h1>Add Product</h1>
-
-                <form onSubmit={onSubmitHandler}>
+        <div className={style['product-add-container']}>
+                <form className={style['product-add-form']} onSubmit={onSubmitHandler}>
                     <label htmlFor="name">Product name</label>
-                    <input 
+                    <input className={style['input-field']}  
                         type="text" 
                         id="name" 
                         name="name" 
@@ -52,7 +61,7 @@ const ProductAdd = () => {
                         id="price"
                         name="price"
                         value={price}
-                        onChange={onChangeHandler} 
+                        
                     />
 
                     <label htmlFor="description">Description</label>
@@ -73,13 +82,9 @@ const ProductAdd = () => {
 
                     <input type="file" name="imageURL" />
                     
-                    <input type="submit" value="Send"  />
-
-                    <input
-                        type="submit"
-                        value="Send"
-                        onClick={onSubmitHandler}
-                    />
+                    <div className={style['button-wrapper']}>
+                        <input type="submit" value="Send"  />
+                    </div>
                 </form>
             </div>
     );

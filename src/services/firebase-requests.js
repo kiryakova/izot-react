@@ -17,7 +17,6 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
         collectionUrl = collectionUrl + ((category && category !== 'all') ? `?category=${category}` : '');
 
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
-        /*return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());*/
     };
 
     //**Based on id returns one element from firebase database collection
@@ -33,6 +32,7 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
             method: 'POST',
             body: JSON.stringify(entityBody)
         }).then(x => x.json());
+        
     };
 
     //**Receive any javascript and creates entity in pre configured collection and the provided Id
