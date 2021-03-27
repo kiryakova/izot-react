@@ -1,7 +1,7 @@
 import style from './styles.module.css';
 
-import * as productsService from '../../services/products-service';
-/*import { requester } from '../../services/app-service.js';*/
+/*import * as productsService from '../../services/products-service';*/
+import { requester } from '../../services/app-service.js';
 
 import { useEffect, useState } from 'react';
 
@@ -17,14 +17,18 @@ const Products = ({
 
     const getProducts = (category, currentCategoryItem) => {
         /*
-        requester.dataSet.getAll(category)
-        */
         productsService.getAll(category)
+        */
+        requester.dataSet.getAll(category)
             .then(res => {
+                res = Object.entries(res)
+                .map(([id, record]) => ({id, ...record}) );
+
                 setProducts(res);
                 setCurrentCategory(category);
                 setCurrentCategoryItem(currentCategoryItem);
             })
+
     }
 
     const menuItemClickHandler = (id) => {

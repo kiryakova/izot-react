@@ -26,11 +26,14 @@ const Product = ({
             <h6>Price: <span>{price} лв.</span></h6>
             <div className={style['button-wrapper']}>
                 <Link to={`/products/${categoryId}/${category}/details/${id}`}><button>Details</button></Link>
-                <Link to="#"><button><i className="fas fa-heart"></i> Product</button></Link>
-                <i className="fas fa-heart"></i> <span> {likes}</span>
+                
             </div>
         </li>
     );
 }
 
+/*
+<Link to="#"><button><i className="fas fa-heart"></i> Product</button></Link>
+                <i className="fas fa-heart"></i> <span> {likes}</span>
+*/
 export default Product;
