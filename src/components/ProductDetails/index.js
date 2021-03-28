@@ -2,7 +2,7 @@ import style from './styles.module.css';
 import styled from 'styled-components'
 
 import {useEffect, useState} from 'react';
-import * as productsService from '../../services/products-service';
+import { requester } from '../../services/app-service.js';
 
 import { Link } from 'react-router-dom';
 
@@ -12,8 +12,8 @@ const ProductDetails = ({
     let [product, setProduct] = useState({});
 
     useEffect(() => {
-        productsService.getOne(match.params.productId)
-            .then(res => setProduct(res));
+        requester.dataSet.getById(match.params.productId)
+            .then(res => setProduct(res) );
     }, []);
 
     const Image = styled.img`

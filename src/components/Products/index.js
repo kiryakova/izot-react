@@ -1,3 +1,5 @@
+import {CATEGORIES_MENU_ITEMS } from '../NavigationCategories/CategoriesMenuItems';
+
 import style from './styles.module.css';
 
 /*import * as productsService from '../../services/products-service';*/
@@ -13,7 +15,7 @@ const Products = ({
 }) => {
     const [products, setProducts] = useState([]);
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
-    const [currentCategory, setCurrentCategory] = useState('all');
+    const [currentCategory, setCurrentCategory] = useState('');
 
     const getProducts = (category, currentCategoryItem) => {
         /*
@@ -21,8 +23,15 @@ const Products = ({
         */
         requester.dataSet.getAll(category)
             .then(res => {
-                res = Object.entries(res)
-                .map(([id, record]) => ({id, ...record}) );
+                if(category && category != 'all'){
+                    res = Object.entries(res)
+                    .filter(([key, value]) => value.category === category)
+                    .map(([id, record]) => ({id, ...record}) );
+                }
+                else{
+                    res = Object.entries(res)
+                    .map(([id, record]) => ({id, ...record}) );
+                }
 
                 setProducts(res);
                 setCurrentCategory(category);
@@ -36,7 +45,7 @@ const Products = ({
     }
 
     useEffect(() => {
-        const category = match.params.category;
+        let category = match.params.category;
 
         if (category == currentCategory) {
             return;
@@ -45,13 +54,15 @@ const Products = ({
         let categoryId = match.params.categoryId;
 
         if(categoryId){
+            category = CATEGORIES_MENU_ITEMS.filter(x => x.id == categoryId).map(x => x)[0].value;
+            
             getProducts(category, categoryId);
         }
         else{
             getProducts(category, currentCategoryItem);
         }
 
-        console.log(products);
+        
     }, [match])
 
     return (

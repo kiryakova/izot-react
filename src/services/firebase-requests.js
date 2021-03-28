@@ -13,15 +13,22 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
     let collectionUrl = apiKey + nameDB;
 
     //**Returns all elements from firebase database collection
-    const getAll = (category = '') => {
-        collectionUrl = collectionUrl + ((category && category !== 'all') ? `?category=${category}` : '');
-
+    const getAll = () => {
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
     };
 
+    /*const getAllByCategory = (category) => {
+        console.log(category);
+        collectionUrl = collectionUrl + ((category && category !== 'all') ? `${category}` : '');
+
+        return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
+
+        //return fetch(`${collectionUrl}/${category}.json`+ (token ? `?auth=${token}`:'')).then(x => x.json());
+    };*/
+
     //**Based on id returns one element from firebase database collection
     //**@param {string} id
-    const getById = (id) => {
+    const getById = (id) => {console.log(id);
         return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:'')).then(x => x.json());
     };
 
@@ -75,6 +82,7 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
 
     return {
         getAll,
+        /*getAllByCategory,*/
         getById,
         createEntity,
         updateEntity,

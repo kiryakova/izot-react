@@ -1,6 +1,6 @@
 export const CATEGORIES = [
-    {text: 'Cash Registers'},
-    {text: 'Electronic Scales'},
-    {text: 'Fiscal Printers'}
+    {value: 'CashRegisters', text: 'Cash Registers'},
+    {value: 'ElectronicScales', text: 'Electronic Scales'},
+    {value: 'FiscalPrinters', text: 'Fiscal Printers'}
 ];
 

@@ -4,39 +4,72 @@ import style from './styles.module.css';
 import styled from 'styled-components';
 
 import { requester } from '../../services/app-service.js';
+import { uploadImage } from '../../services/cloudinary-service.js';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const ProductAdd = ({
+    match,
     history
 }) => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [imageURL, setImageURL] = useState('');
+    const [file, setFile] = useState();
     const [price, setPrice] = useState();
-    const [errors, setErrors] = useState({name: '', category: ''});
+    const [errors, setErrors] = useState({name: ''});
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
 
-        if (e.target.name.length < 5) {
+        if (e.target.name.value.length < 5) {
             setErrors({ ...errors, name: 'Product name should be at least 5 characters long!'});
         }
+        console.log(errors);
 
-        const { name, price, description, category, imageURL } = e.target;
+        if (e.target.price.value.length < 0) {
+            setErrors({ ...errors, price: 'Product price should be positive value!'});
+        }
 
-        requester.dataSet.createEntity({'name': name.value, 'price' : price.value, 'description' : description.value, 'category' : category.value, 'imageURL' : imageURL.value})
-            .then(() => {
-                history.push('/products');
-            });
+        if (!file) {
+            setErrors({ ...errors, image: 'Product image should be set!'});
+        }
+        console.log("aaa");
+        if(!errors){
+            const { name, price, description, category } = e.target;
 
-        e.stopPropagation();
+            let formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', 'htugtrbk');
+        
+            const res = await uploadImage(formData);
+            
+            const imageUrl = res['secure_url'];
+
+            const data = {
+                'name': name.value, 
+                'price' : price.value, 
+                'description' : description.value, 
+                'category' : category.value, 
+                'imageURL' : imageUrl
+            };
+
+            requester.dataSet.createEntity(data)
+                .then(() => {
+                    history.push(`/products`);
+                });
+
+            e.stopPropagation();
+        }
     };
 
     const onChangeHandler = (e) => {
         setName(e.target.value);
+    }
+
+    const onChangeHandlerFile = (e) => {
+        setFile(e.target.files[0]);
     }
 
     return (
@@ -47,8 +80,9 @@ const ProductAdd = ({
                         type="text" 
                         id="name" 
                         name="name" 
-                        value={name} 
-                        onChange={onChangeHandler} 
+                        value={name}  
+                        onChange={onChangeHandler}  
+                        
                     />
                     {errors.name && 
                         <span>{errors.name}</span>
@@ -60,28 +94,30 @@ const ProductAdd = ({
                         type="number"
                         id="price"
                         name="price"
-                        value={price}
-                        
                     />
+                    {errors.price && 
+                        <span>{errors.price}</span>
+                    }
 
                     <label htmlFor="description">Description</label>
-                    <textarea name="description" onChange={onChangeHandler} value={description} />
+                    <textarea name="description" />
 
                     <label htmlFor="category"></label>
                     <select
                         name="category"
-                        id="category"
-                        onChange={onChangeHandler}
-                        value={category}
+                        id="category" 
                     >
                         {CATEGORIES.map(x => 
-                            <option key={x.text} value={x.text}>{x.text}</option>    
+                            <option key={x.id} value={x.value}>{x.text}</option>    
                         )}
                     </select>
 
+                    <label htmlFor="upload-file">Upload File</label>
+                    <input id="upload-file" type="file" className="upload-file-button" onChange={onChangeHandlerFile} />
+                    {errors.file && 
+                        <span>{errors.file}</span>
+                    }
 
-                    <input type="file" name="imageURL" />
-                    
                     <div className={style['button-wrapper']}>
                         <input type="submit" value="Send"  />
                     </div>

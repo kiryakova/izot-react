@@ -1,6 +1,6 @@
 export const CATEGORIES_MENU_ITEMS = [
-    {id: 1, text: 'All Products', href: '/products/category/all', image: "all"},
-    {id: 2, text: 'Cash Registers', href: '/products/category/Cash Registers', image: "cashRegisters"},
-    {id: 3, text: 'Electronic Scales', href: '/products/category/Electronic Scales', image: "electronicScales"},
-    {id: 4, text: 'Fiscal Printers', href: '/products/category/Fiscal Printers', image: "fiscalPrinters"}
+    {id: 1, value: 'all', text: 'All Products', href: '/products', image: "all"},
+    {id: 2, value: 'CashRegisters', text: 'Cash Registers', href: '/products/category/CashRegisters', image: "cashRegisters"},
+    {id: 3, value: 'ElectronicScales', text: 'Electronic Scales', href: '/products/category/ElectronicScales', image: "electronicScales"},
+    {id: 4, value: 'FiscalPrinters', text: 'Fiscal Printers', href: '/products/category/FiscalPrinters', image: "fiscalPrinters"}
 ];
