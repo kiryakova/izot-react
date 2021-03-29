@@ -14,27 +14,42 @@ import FormErrorField from '../FormErrorField';
 const ProductAdd = ({
     history
 }) => {
-    const [name, setName] = useState('');
+    const [name, setName] = useState();
     const [price, setPrice] = useState();
+    const [description, setDescription] = useState();
     const [file, setFile] = useState();
-    const [errors, setErrors] = useState({name: '', file: null});
+    const [errors, setErrors] = useState({});
+
+    const onChangeHandlerFile = (e) => {
+        //setState({ ...state, file: e.target.files[0] });
+        setFile(e.target.files[0]);
+    }
+
+    /*const validation = (name, price, description, file) => {
+
+        if (!name || name.length < 5) {
+            setErrors({name: 'Product name should be at least 5 characters long!'});
+        }
+
+        if (!price || price <= 0) {
+            setErrors({price: 'Price should be entered!'});
+        }
+
+        if (!description || description.length < 7) {
+            setErrors({description: 'Description should be at least 7 characters long!'});
+        }
+
+        if (!file) {
+            setErrors({file: 'Product image should be set!'});
+        }
+    }*/
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
 
         setErrors({});
 
-        if(name.length < 5) {
-            setErrors({name: 'Product name should be at least 5 characters long!'});
-            return;
-        }
-
-        if(!file) {
-            setErrors({file: 'Product image should be set!'});
-            return;
-        }
-        
-        const { name, price, description, category } = e.target;
+        //await validation(name, price, description, file);
 
         let formData = new FormData();
         formData.append('file', file);
@@ -43,6 +58,8 @@ const ProductAdd = ({
         const res = await uploadImage(formData);
         
         const imageUrl = res['secure_url'];
+        
+        const { name, price, description, category } = e.target;
 
         const data = {
             'name': name.value, 
@@ -51,6 +68,28 @@ const ProductAdd = ({
             'category' : category.value, 
             'imageURL' : imageUrl
         };
+        
+        if (!data.name) {
+            setErrors({name: 'Product name should be at least 5 characters long!'});
+            return;
+        }
+
+        if (!data.price) {
+            setErrors({price: 'Price should be entered!'});
+            return;
+        }
+
+        if (!data.description || data.description.length < 7) {
+            setErrors({description: 'Description should be at least 7 characters long!'});
+            return;
+        }
+
+        if (!file) {
+            setErrors({file: 'Product image should be set!'});
+            return;
+        }
+
+        //if(Object.entries(errors).length === 0){
 
         requester.dataSet.createEntity(data)
             .then(() => {
@@ -58,22 +97,28 @@ const ProductAdd = ({
             });
 
         e.stopPropagation();
-        
+        //}
     };
 
-    const onChangeHandlerFile = (e) => {
-        setFile(e.target.files[0]);
+    const onChangeHandler = (e) => {
+        /*const { name, value } = e.target;
+        console.log(name);
+        setState({ ...state, [name]: value });
+console.log(state);*/
+        setName(e.target.value);
     }
 
     return (
         <div className={style['product-add-container']}>
                 <form className={style['product-add-form']} onSubmit={onSubmitHandler}>
-                <FormInput
+                    
+                    <FormInput
                         name="name"
                         type="text" 
                         handleChange={setName}
-                        defaultValue={name}
+                        defaultValue={name} 
                         label='Product name'
+                        
                     />
                     <FormErrorField message={errors.name} />
 
@@ -82,13 +127,17 @@ const ProductAdd = ({
                         type="number" 
                         step="0.01" 
                         handleChange={setPrice}
-                        defaultValue={price}
+                        defaultValue={price} 
                         label='Price(leva)'
+                        
                     />
                     <FormErrorField message={errors.price} />
 
                     <label className={style['label']} htmlFor="description">Description</label>
-                    <textarea className={style['input-field']} name="description" />
+                    <textarea className={style['input-field']} 
+                        name="description" 
+                        defaultValue={description} 
+                        onChange={(e) => setDescription(e.target.value)} />
 
                     <label className={style['label']} htmlFor="category">Category</label>
                     <select className={style['input-field']} 

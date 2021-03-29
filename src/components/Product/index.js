@@ -1,7 +1,8 @@
 import style from './styles.module.css';
-import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
+
+import Image from '../Image';
 
 const Product = ({
     id,
@@ -13,11 +14,6 @@ const Product = ({
     likes,
 }) => {
 
-    const Image = styled.img`
-                    width: 250px;
-                    height: 250px
-                    `
-
     return (
         <li className={style['product-item']}>
             <Image src={imageURL} />
@@ -26,7 +22,7 @@ const Product = ({
             <h6>Price: <span>{price} лв.</span></h6>
             <div className={style['button-wrapper']}>
                 <Link to={`/products/${categoryId}/${category}/details/${id}`}><button>Details</button></Link>
-                
+                <Link to={`/products/${categoryId}/${category}/edit/${id}`}><button>Edit</button></Link>
             </div>
         </li>
     );
