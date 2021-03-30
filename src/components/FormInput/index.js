@@ -13,7 +13,7 @@ const FormInput = ({ handleChange, label, ...props }) => {
                 </FormInputLabel>
             ) : null}
 
-            {handleChange ? (<FormInputField onChange={(e) => handleChange(e.target.value)} {...props} />)
+            {handleChange ? (<FormInputField onBlur={(e) => handleChange(e.target.name, e.target.value)} {...props} />)
             : <FormInputField {...props} /> }
         </FormInputContainer>
     );

@@ -6,6 +6,7 @@ import { requester } from '../../services/app-service.js';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../FormInput';
+import FormTextarea from '../FormTextarea';
 import FormErrorField from '../FormErrorField';
 import Image from '../Image';
 
@@ -33,17 +34,17 @@ const ProductEdit = ({
         const { price, description } = e.target;
 
         const data = {
-            'price' : price.value, 
+            'price' : Number(price.value), 
             'description' : description.value, 
         };
 
-        if(!data.price) {
-            setErrors({price: 'Price should be entered!'});
+        if(data.price < 0) {
+            setErrors({price: 'price should positive!'});
             return;
         }
 
-        if(!data.description || data.description.length < 7) {
-            setErrors({description: 'Description should be at least 7 characters long!'});
+        if(data.description.length < 7) {
+            setErrors({description: 'description should be at least 7 characters long!'});
             return;
         }
         
@@ -58,6 +59,18 @@ const ProductEdit = ({
         //}
     };
 
+    const handleChangeField = (name, value) => {
+        if(name == "description" && value.length < 5) {
+            setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
+        }
+        else if(name == "price" && Number(value) < 0) {
+            setErrors({...errors, [name]: `${name} should be positive!`});
+        }
+        else{
+            setErrors({...errors, [name]: ''});
+        }
+    }
+
     return (
         <section className = {style['container-product-edit']}>
             <article className = {style['product-edit']}>
@@ -70,18 +83,19 @@ const ProductEdit = ({
                         name="price"
                         type="number" 
                         step="0.01" 
-                        handleChange={setPrice}
+                        handleChange={handleChangeField} 
                         defaultValue={product.price}
                         label='Price(leva)'
                         required
                     />
                     <FormErrorField message={errors.price} />
 
-                    <label className={style['label']} htmlFor="description">Description</label>
-                    <textarea className={style['input-field']} 
-                            name="description" 
-                            defaultValue={product.description} 
-                            onChange={(e) => setDescription(e.target.value)} />
+                    <FormTextarea
+                        name="description" 
+                        label='Description' 
+                        handleChange={handleChangeField} 
+                        defaultValue={product.description} 
+                    />
                     <FormErrorField message={errors.description} />
 
                     <div className={style['button-wrapper']}>

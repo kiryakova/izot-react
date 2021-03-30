@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import FormInput from '../FormInput';
+import FormTextarea from '../FormTextarea';
+import FormDropdown from '../FormDropdown';
 import FormErrorField from '../FormErrorField';
 
 const ProductAdd = ({
@@ -16,6 +18,7 @@ const ProductAdd = ({
 }) => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState();
+    const [description, setDescription] = useState();
     const [file, setFile] = useState();
     const [errors, setErrors] = useState({name: '', file: null});
 
@@ -24,17 +27,10 @@ const ProductAdd = ({
 
         setErrors({});
 
-        if(name.length < 5) {
-            setErrors({name: 'Product name should be at least 5 characters long!'});
-            return;
-        }
-
         if(!file) {
             setErrors({file: 'Product image should be set!'});
             return;
         }
-        
-        const { name, price, description, category } = e.target;
 
         let formData = new FormData();
         formData.append('file', file);
@@ -44,13 +40,30 @@ const ProductAdd = ({
         
         const imageUrl = res['secure_url'];
 
+        const { name, price, description, category } = e.target;
+
         const data = {
             'name': name.value, 
-            'price' : price.value, 
+            'price' : Number(price.value), 
             'description' : description.value, 
             'category' : category.value, 
             'imageURL' : imageUrl
         };
+
+        if(data.name.length < 5) {
+            setErrors({name: 'product name should be at least 5 characters long!'});
+            return;
+        }
+
+        if(data.price < 0) {
+            setErrors({price: 'price should be positive!'});
+            return;
+        }
+
+        if(data.description.length < 7) {
+            setErrors({price: 'description should be at least 7 characters long!'});
+            return;
+        }
 
         requester.dataSet.createEntity(data)
             .then(() => {
@@ -61,6 +74,21 @@ const ProductAdd = ({
         
     };
 
+    const handleChangeField = (name, value) => {
+        if(name == "name" && value.length < 5) {console.log(name);
+            setErrors({...errors, [name]: `Product ${name} should be at least 5 characters long!`});
+        }
+        else if(name == "price" && Number(value) < 0) {
+            setErrors({...errors, [name]: `${name} should be positive!`});
+        }
+        else if(name == "description" && value.length < 5) {
+            setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
+        }
+        else{
+            setErrors({...errors, [name]: ''});
+        }
+    }
+
     const onChangeHandlerFile = (e) => {
         setFile(e.target.files[0]);
     }
@@ -68,12 +96,12 @@ const ProductAdd = ({
     return (
         <div className={style['product-add-container']}>
                 <form className={style['product-add-form']} onSubmit={onSubmitHandler}>
-                <FormInput
+                    <FormInput
                         name="name"
                         type="text" 
-                        handleChange={setName}
+                        handleChange={handleChangeField}
                         defaultValue={name}
-                        label='Product name'
+                        label='Product name' 
                     />
                     <FormErrorField message={errors.name} />
 
@@ -81,24 +109,26 @@ const ProductAdd = ({
                         name="price"
                         type="number" 
                         step="0.01" 
-                        handleChange={setPrice}
+                        handleChange={handleChangeField} 
                         defaultValue={price}
-                        label='Price(leva)'
+                        label='Price(leva)' 
                     />
                     <FormErrorField message={errors.price} />
+                    
+                    <FormTextarea
+                        name="description" 
+                        label='Description' 
+                        handleChange={handleChangeField} 
+                        defaultValue={description} 
+                    />
+                    <FormErrorField message={errors.description} />
 
-                    <label className={style['label']} htmlFor="description">Description</label>
-                    <textarea className={style['input-field']} name="description" />
-
-                    <label className={style['label']} htmlFor="category">Category</label>
-                    <select className={style['input-field']} 
-                        name="category"
+                    <FormDropdown
+                        name="category" 
                         id="category" 
-                    >
-                        {CATEGORIES.map(x => 
-                            <option key={x.id} value={x.value}>{x.text}</option>    
-                        )}
-                    </select>
+                        label='Category' 
+                        options={CATEGORIES} 
+                    />
 
                     <label className={style['label']} htmlFor="upload-file">Upload File</label>
                     <input className={style['input-field']} 
@@ -108,9 +138,7 @@ const ProductAdd = ({
                         className="upload-file-button" 
                         onChange={onChangeHandlerFile} 
                     />
-                    {errors.file && 
-                        <span>{errors.file}</span>
-                    }
+                    <FormErrorField message={errors.file} />
 
                     <div className={style['button-wrapper']}>
                         <input type="submit" value="Save"  />
