@@ -12,6 +12,7 @@ import FormInput from '../FormInput';
 import FormTextarea from '../FormTextarea';
 import FormDropdown from '../FormDropdown';
 import FormErrorField from '../FormErrorField';
+import Notification from '../Notification';
 
 const ProductAdd = ({
     history
@@ -20,6 +21,7 @@ const ProductAdd = ({
     const [price, setPrice] = useState();
     const [description, setDescription] = useState();
     const [file, setFile] = useState();
+    const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({name: '', file: null});
 
     const onSubmitHandler = async (e) => {
@@ -55,8 +57,8 @@ const ProductAdd = ({
             return;
         }
 
-        if(data.price < 0) {
-            setErrors({price: 'price should be positive!'});
+        if(data.price.length < 1) {
+            setErrors({price: 'price should be set!'});
             return;
         }
 
@@ -65,21 +67,41 @@ const ProductAdd = ({
             return;
         }
 
+        /*
         requester.dataSet.createEntity(data)
             .then(() => {
                 history.push(`/products`);
             });
+        */
+        addProduct(data);
 
         e.stopPropagation();
         
     };
 
+    const addProduct = async (data) => {
+        try{
+            await requester.dataSet.createEntity(data);
+            setNotification('The product is created!');
+            
+            const timer = setTimeout(() => {
+                history.push(`/products`);
+                }, 3000);
+            
+            return () => clearTimeout(timer);
+
+        }
+        catch(e){
+            setNotification('The product is not deleted!');
+        };
+    }
+
     const handleChangeField = (name, value) => {
-        if(name == "name" && value.length < 5) {console.log(name);
+        if(name == "name" && value.length < 5) {
             setErrors({...errors, [name]: `Product ${name} should be at least 5 characters long!`});
         }
-        else if(name == "price" && Number(value) < 0) {
-            setErrors({...errors, [name]: `${name} should be positive!`});
+        else if(name == "price" && value.length < 1) {
+            setErrors({...errors, [name]: `${name} should be set!`});
         }
         else if(name == "description" && value.length < 5) {
             setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
@@ -95,6 +117,7 @@ const ProductAdd = ({
 
     return (
         <div className={style['product-add-container']}>
+                <Notification message={notification} />
                 <form className={style['product-add-form']} onSubmit={onSubmitHandler}>
                     <FormInput
                         name="name"

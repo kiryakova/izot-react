@@ -1,16 +1,17 @@
-.product-edit-container {
+/*.product-edit-container {
   padding: 50px 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+}*/
 
 .product-edit-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  width: 500px;
 }
 
 .product-edit-form .label {
@@ -40,8 +41,7 @@
   width: 100%;
   display: flex;
   justify-content:space-between;
-  align-items: center
-  ;
+  align-items: center;
 }
 
 .product-edit-form input[type='submit'],
@@ -78,6 +78,7 @@
 }
 
 .product-edit h5 {
+  margin-top: 30px;
   font-size: 18px;
   color: rgb(48, 47, 47);
 }

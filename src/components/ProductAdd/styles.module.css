@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  width: 500px;
 }
 
 .product-add-form .label {
@@ -37,7 +38,7 @@
 }
 
 .product-add-form .button-wrapper {
-  width: 250px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

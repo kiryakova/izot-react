@@ -9,6 +9,7 @@ import FormInput from '../FormInput';
 import FormTextarea from '../FormTextarea';
 import FormErrorField from '../FormErrorField';
 import Image from '../Image';
+import Notification from '../Notification';
 
 const ProductEdit = ({
     match,
@@ -17,6 +18,7 @@ const ProductEdit = ({
     let [product, setProduct] = useState({});
     const [price, setPrice] = useState();
     const [description, setDescription] = useState();
+    const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -38,8 +40,8 @@ const ProductEdit = ({
             'description' : description.value, 
         };
 
-        if(data.price < 0) {
-            setErrors({price: 'price should positive!'});
+        if(data.price.length < 1) {
+            setErrors({price: 'price should be set!'});
             return;
         }
 
@@ -48,23 +50,42 @@ const ProductEdit = ({
             return;
         }
         
-        //if(Object.entries(errors).length === 0){
+        /*
+        requester.dataSet.patchEntity(data, match.params.productId)
+            .then(() => {
+                history.push(`/products/${match.params.categoryId}/category/${product.category}`);
+            });
+        */
 
-            requester.dataSet.patchEntity(data, match.params.productId)
-                .then(() => {
-                    history.push(`/products/${match.params.categoryId}/category/${product.category}`);
-                });
+        editProduct(data, match.params.productId);
 
-            e.stopPropagation();
-        //}
+        e.stopPropagation();
+        
     };
+
+    const editProduct = async (data, productId) => {
+        try{
+            await requester.dataSet.patchEntity(data, productId);
+            setNotification('The product is edited!');
+            
+            const timer = setTimeout(() => {
+                history.push(`/products/${match.params.categoryId}/category/${product.category}`);
+                }, 3000);
+            
+            return () => clearTimeout(timer);
+
+        }
+        catch(e){
+            setNotification('The product is not deleted!');
+        };
+    }
 
     const handleChangeField = (name, value) => {
         if(name == "description" && value.length < 5) {
             setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
         }
-        else if(name == "price" && Number(value) < 0) {
-            setErrors({...errors, [name]: `${name} should be positive!`});
+        else if(name == "price" && value.length < 1) {
+            setErrors({...errors, [name]: `${name} should be set!`});
         }
         else{
             setErrors({...errors, [name]: ''});
@@ -74,6 +95,7 @@ const ProductEdit = ({
     return (
         <section className = {style['container-product-edit']}>
             <article className = {style['product-edit']}>
+                <Notification message={notification} />
                 <Image src={product.imageURL} />
                 <h5>{product.name}</h5>
                 <p>Category: {product.category}</p>

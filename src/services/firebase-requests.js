@@ -17,15 +17,6 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
     };
 
-    /*const getAllByCategory = (category) => {
-        console.log(category);
-        collectionUrl = collectionUrl + ((category && category !== 'all') ? `${category}` : '');
-
-        return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:'')).then(x => x.json());
-
-        //return fetch(`${collectionUrl}/${category}.json`+ (token ? `?auth=${token}`:'')).then(x => x.json());
-    };*/
-
     //**Based on id returns one element from firebase database collection
     //**@param {string} id
     const getById = (id) => {console.log(id);
@@ -82,7 +73,6 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
 
     return {
         getAll,
-        /*getAllByCategory,*/
         getById,
         createEntity,
         updateEntity,
