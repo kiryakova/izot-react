@@ -10,8 +10,7 @@ const Product = ({
     price,
     imageURL,
     category,
-    categoryId,
-    likes,
+    categoryId
 }) => {
 
     return (
@@ -22,14 +21,12 @@ const Product = ({
             <h6>Price: <span>{price} лв.</span></h6>
             <div className={style['button-wrapper']}>
                 <Link to={`/products/${categoryId}/${category}/details/${id}`}><button>Details</button></Link>
-                <Link to={`/products/${categoryId}/${category}/edit/${id}`}><button>Edit</button></Link>
             </div>
         </li>
     );
 }
 
 /*
-<Link to="#"><button><i className="fas fa-heart"></i> Product</button></Link>
-                <i className="fas fa-heart"></i> <span> {likes}</span>
+<Link to={`/products/${categoryId}/${category}/edit/${id}`}><button>Edit</button></Link>
 */
 export default Product;

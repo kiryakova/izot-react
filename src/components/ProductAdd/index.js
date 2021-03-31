@@ -4,6 +4,7 @@ import style from './styles.module.css';
 
 import { requester } from '../../services/app-service.js';
 import { uploadImage } from '../../services/cloudinary-service.js';
+import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -59,12 +60,10 @@ const ProductAdd = ({
 
         if(data.price.length < 1) {
             setErrors({price: 'price should be set!'});
-            return;
         }
 
         if(data.description.length < 7) {
             setErrors({price: 'description should be at least 7 characters long!'});
-            return;
         }
 
         /*
@@ -73,7 +72,10 @@ const ProductAdd = ({
                 history.push(`/products`);
             });
         */
-        addProduct(data);
+
+        if(Object.keys(errors).length == 0){
+            addProduct(data);
+        }
 
         e.stopPropagation();
         
@@ -84,11 +86,12 @@ const ProductAdd = ({
             await requester.dataSet.createEntity(data);
             setNotification('The product is created!');
             
-            const timer = setTimeout(() => {
+            timeoutRedirect(history, `/products`);
+            /*const timer = setTimeout(() => {
                 history.push(`/products`);
                 }, 3000);
             
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer);*/
 
         }
         catch(e){
@@ -100,14 +103,25 @@ const ProductAdd = ({
         if(name == "name" && value.length < 5) {
             setErrors({...errors, [name]: `Product ${name} should be at least 5 characters long!`});
         }
-        else if(name == "price" && value.length < 1) {
+        else if(name == "name") {
+            const {name, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+
+        if(name == "price" && value.length < 1) {
             setErrors({...errors, [name]: `${name} should be set!`});
         }
-        else if(name == "description" && value.length < 5) {
+        else if(name == "price") {
+            const {price, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+
+        if(name == "description" && value.length < 7) {
             setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
         }
-        else{
-            setErrors({...errors, [name]: ''});
+        else if(name == "description") {
+            const {description, ...partialErrors} = errors;
+            setErrors({...partialErrors});
         }
     }
 

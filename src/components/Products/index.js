@@ -17,6 +17,27 @@ const Products = ({
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
     const [currentCategory, setCurrentCategory] = useState('');
 
+    useEffect(() => {
+        let category = match.params.category;
+
+        if (category == currentCategory) {
+            return;
+        }
+        
+        let categoryId = match.params.categoryId;
+
+        if(categoryId){
+            category = CATEGORIES_MENU_ITEMS.filter(x => x.id == categoryId).map(x => x)[0].value;
+            
+            getProducts(category, categoryId);
+        }
+        else{
+            getProducts(category, currentCategoryItem);
+        }
+
+        
+    }, [match])
+    
     const getProducts = (category, currentCategoryItem) => {
         /*
         productsService.getAll(category)
@@ -43,27 +64,6 @@ const Products = ({
     const menuItemClickHandler = (id) => {
         setCurrentCategoryItem(id);
     }
-
-    useEffect(() => {
-        let category = match.params.category;
-
-        if (category == currentCategory) {
-            return;
-        }
-        
-        let categoryId = match.params.categoryId;
-
-        if(categoryId){
-            category = CATEGORIES_MENU_ITEMS.filter(x => x.id == categoryId).map(x => x)[0].value;
-            
-            getProducts(category, categoryId);
-        }
-        else{
-            getProducts(category, currentCategoryItem);
-        }
-
-        
-    }, [match])
 
     return (
         <div className={style.container}>

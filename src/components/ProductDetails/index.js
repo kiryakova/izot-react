@@ -2,6 +2,7 @@ import style from './styles.module.css';
 
 import {useEffect, useState} from 'react';
 import { requester } from '../../services/app-service.js';
+import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 
 import { Link } from 'react-router-dom';
 
@@ -25,11 +26,15 @@ const ProductDetails = ({
             await requester.dataSet.deleteEntity(match.params.productId);
             setNotification('The product is deleted!');
             
+            timeoutRedirect(history, `/products/${match.params.categoryId}/category/${product.category}`);
+
+            /*
             const timer = setTimeout(() => {
                 history.push(`/products/${match.params.categoryId}/category/${product.category}`);
               }, 3000);
             
             return () => clearTimeout(timer);
+            */
 
         }
         catch(e){
@@ -47,10 +52,10 @@ const ProductDetails = ({
                 <h6>Price: <span>{product.price} лв.</span></h6>
                 
                 <p>{product.description}</p>
+
                 <div className={style['button-wrapper']}>
-                    <button onClick={deleteProduct}>Delete</button>
-                </div>
-                <div className={style['button-wrapper']}>
+                    <Link to={`/products/${match.params.categoryId}/${product.category}/edit/${match.params.productId}`}><button>Edit</button></Link>
+                    <Link to="#"><button onClick={deleteProduct}>Delete</button></Link>
                     <Link to={`/products/${match.params.categoryId}/category/${product.category}`}><button>Back to products...</button></Link>
                 </div>
             </article>

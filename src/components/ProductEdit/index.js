@@ -2,6 +2,7 @@ import style from './styles.module.css';
 
 import {useEffect, useState} from 'react';
 import { requester } from '../../services/app-service.js';
+import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 
 import { Link } from 'react-router-dom';
 
@@ -41,13 +42,12 @@ const ProductEdit = ({
         };
 
         if(data.price.length < 1) {
-            setErrors({price: 'price should be set!'});
-            return;
+            setErrors({...errors, price: 'price should be set!'});
+            
         }
 
         if(data.description.length < 7) {
-            setErrors({description: 'description should be at least 7 characters long!'});
-            return;
+            setErrors({...errors, description: 'description should be at least 7 characters long!'});
         }
         
         /*
@@ -57,9 +57,11 @@ const ProductEdit = ({
             });
         */
 
-        editProduct(data, match.params.productId);
+        if(Object.keys(errors).length == 0){
+            editProduct(data, match.params.productId);
+        }
 
-        e.stopPropagation();
+        //e.stopPropagation();
         
     };
 
@@ -68,11 +70,12 @@ const ProductEdit = ({
             await requester.dataSet.patchEntity(data, productId);
             setNotification('The product is edited!');
             
-            const timer = setTimeout(() => {
+            timeoutRedirect(history, `/products/${match.params.categoryId}/category/${product.category}`);
+            /*const timer = setTimeout(() => {
                 history.push(`/products/${match.params.categoryId}/category/${product.category}`);
                 }, 3000);
             
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer);*/
 
         }
         catch(e){
@@ -81,14 +84,20 @@ const ProductEdit = ({
     }
 
     const handleChangeField = (name, value) => {
-        if(name == "description" && value.length < 5) {
+        if(name == "description" && value.length < 7) {
             setErrors({...errors, [name]: `${name} should be at least 7 characters long!`});
         }
-        else if(name == "price" && value.length < 1) {
+        else if(name == "description") {
+            const {description, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+        console.log(value);
+        if(name == "price" && value <= 0) {
             setErrors({...errors, [name]: `${name} should be set!`});
         }
-        else{
-            setErrors({...errors, [name]: ''});
+        else if(name == "price") {
+            const {price, ...partialErrors} = errors;
+            setErrors({...partialErrors});
         }
     }
 
