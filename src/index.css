@@ -25,7 +25,14 @@ code {
     monospace;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6, .lazy-notification {
   font-family: 'Montserrat', sans-serif;
   font-size: 24px;
+}
+
+h1,
+.lazy-notification {
+	color: rgb(170, 12, 12);
+	font-weight: bolder;
+	letter-spacing: 2px;
 }

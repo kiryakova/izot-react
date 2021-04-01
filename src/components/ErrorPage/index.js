@@ -1,17 +1,18 @@
 import style from './styles.module.css';
 
+import notFound from '../../images/not-found.png';
+
 import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
     return (
-        <section>
+        <section className={style['section-error-page']}>
 
-            <div>
-                <h2>404 - Not Found</h2>
-                <Link className="button" to="/products">Go to Products</Link>
+            <div className={style['button-wrapper']}>
+                <Link className={style['button-back']} to="/products">Go to Products</Link>
             </div>
 
-            <img src="https://res.cloudinary.com/stela-cloud/image/upload/o7hfrt963.png" alt="404" />
+            <img src={notFound} alt="404" />
         </section>
     )
 }

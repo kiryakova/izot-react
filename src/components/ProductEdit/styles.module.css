@@ -48,6 +48,7 @@
 .product-edit-form a {
   outline: none;
   text-decoration: none;
+  text-align: center;
   width: 48%;
   border-radius: 3px;
   padding: 7px 15px;

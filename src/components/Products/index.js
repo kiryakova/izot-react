@@ -16,6 +16,7 @@ const Products = ({
     const [products, setProducts] = useState([]);
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
     const [currentCategory, setCurrentCategory] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         let category = match.params.category;
@@ -54,6 +55,7 @@ const Products = ({
                     .map(([id, record]) => ({id, ...record}) );
                 }
 
+                setIsLoading(true);
                 setProducts(res);
                 setCurrentCategory(category);
                 setCurrentCategoryItem(currentCategoryItem);
@@ -68,6 +70,8 @@ const Products = ({
     return (
         <div className={style.container}>
             <NavigationCategories menuItemClickHandler={menuItemClickHandler} currentCategoryItem={currentCategoryItem} />
+
+            <h1>{!isLoading ? 'Loading...' : ``}</h1>
 
             <ul className={style['container-products']}>
                 {products.map(x => 
