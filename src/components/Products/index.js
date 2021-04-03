@@ -2,8 +2,7 @@ import {CATEGORIES_MENU_ITEMS } from '../NavigationCategories/CategoriesMenuItem
 
 import style from './styles.module.css';
 
-/*import * as productsService from '../../services/products-service';*/
-import { requester } from '../../services/app-service.js';
+import requester from '../../services/app-service';
 
 import { useEffect, useState } from 'react';
 

@@ -1,3 +1,6 @@
+import './utils/firebase';
+import './services/app-service';
+
 import React, {Suspense} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
@@ -18,9 +21,9 @@ const ProductAdd = React.lazy(() => import('./components/ProductAdd'));
 const ProductDetails = React.lazy(() => import('./components/ProductDetails'));
 const ProductEdit = React.lazy(() => import('./components/ProductEdit'));
 const Contacts = React.lazy(() => import('./components/Contacts'));
+const LogIn = React.lazy(() => import('./components/LogIn'));
 const Profile = React.lazy(() => import('./components/Profile'));
 const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
-
 
 function App() {
   return (
@@ -36,6 +39,7 @@ function App() {
             <Route path="/products/:categoryId/:category/details/:productId" component={ProductDetails} />
             <Route path="/products/:categoryId/:category/edit/:productId" component={ProductEdit} />
             <Route path="/contacts" exact component={Contacts} />
+            <Route path="/login" exact component={LogIn} />
             <Route path="/profile" exact component={Profile} />
             <Route component={ErrorPage} />
           </Switch>

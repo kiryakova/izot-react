@@ -1,7 +1,8 @@
 import style from './styles.module.css';
 
+import requester from '../../services/app-service';
+
 import {useEffect, useState} from 'react';
-import { requester } from '../../services/app-service.js';
 import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 
 import { Link } from 'react-router-dom';

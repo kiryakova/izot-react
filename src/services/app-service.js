@@ -1,7 +1,10 @@
-import { fireBaseRequestFactory } from './firebase-requests.js';
+import { fireBaseRequestFactory } from './firebase-requests';
+
+const nameDB = "products";
+const apiKey = 'https://softuniproject-412dd.firebaseio.com/';
 
 //**Creates object that support CRUD operations over set of entities
-export const requester = (() => {
+const requester = (() => {
     let _dataSet;
     let apiKey;
     let nameDB;
@@ -35,3 +38,10 @@ export const requester = (() => {
         }
     };
 })();
+
+if(!requester.dataSet){
+    requester.init(apiKey, nameDB, sessionStorage.getItem('token'));
+}
+
+//export const requester = requester.dataSet;
+export default requester;

@@ -1,8 +1,9 @@
 import { CATEGORIES } from '../../config/categories';
 
+import requester from '../../services/app-service';
+
 import style from './styles.module.css';
 
-import { requester } from '../../services/app-service.js';
 import { uploadImage } from '../../services/cloudinary-service.js';
 import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 

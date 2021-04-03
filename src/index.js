@@ -1,14 +1,10 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import { requester } from './services/app-service.js';
-const nameDB = "products";
-const apiKey = 'https://softuniproject-412dd.firebaseio.com/';
-requester.init(apiKey, nameDB, sessionStorage.getItem('token'));
 
 ReactDOM.render(
   <React.StrictMode>
