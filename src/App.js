@@ -1,8 +1,8 @@
-import './utils/firebase';
+import firebase from './utils/firebase';
 import './services/app-service';
 
 import React, {Suspense} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 import ContextWrapper from './ContextWrapper';
 
@@ -13,7 +13,6 @@ import Footer from './components/Footer';
 //import ProductDetails from './components/ProductDetails';
 //import ProductEdit from './components/ProductEdit';
 //import Contacts from './components/Contacts';
-//import Profile from './components/Profile';
 //import ErrorPage from './components/ErrorPage';
 
 const Products = React.lazy(() => import('./components/Products'));
@@ -21,8 +20,8 @@ const ProductAdd = React.lazy(() => import('./components/ProductAdd'));
 const ProductDetails = React.lazy(() => import('./components/ProductDetails'));
 const ProductEdit = React.lazy(() => import('./components/ProductEdit'));
 const Contacts = React.lazy(() => import('./components/Contacts'));
+const Register = React.lazy(() => import('./components/Register'));
 const LogIn = React.lazy(() => import('./components/LogIn'));
-const Profile = React.lazy(() => import('./components/Profile'));
 const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
 
 function App() {
@@ -39,8 +38,12 @@ function App() {
             <Route path="/products/:categoryId/:category/details/:productId" component={ProductDetails} />
             <Route path="/products/:categoryId/:category/edit/:productId" component={ProductEdit} />
             <Route path="/contacts" exact component={Contacts} />
+            <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={LogIn} />
-            <Route path="/profile" exact component={Profile} />
+            <Route path='/logout' render={() => {
+              firebase.auth().signOut();
+              return <Redirect to="/" />
+            }} />
             <Route component={ErrorPage} />
           </Switch>
         </Suspense>

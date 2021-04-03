@@ -26,7 +26,4 @@ const Product = ({
     );
 }
 
-/*
-<Link to={`/products/${categoryId}/${category}/edit/${id}`}><button>Edit</button></Link>
-*/
 export default Product;

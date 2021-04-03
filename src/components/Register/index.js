@@ -10,7 +10,7 @@ import { useState } from 'react';
 import FormInput from '../FormInput';
 import Notification from '../Notification';
 
-const LogIn = ({
+const Register = ({
     history
 }) => {
     const [email, setEmail] = useState('');
@@ -27,26 +27,26 @@ const LogIn = ({
             'password' : password.value
         };
 
-        verifyUserAndLogIn(data);
+        registerUser(data);
 
         e.stopPropagation();
         
     };
 
-    const verifyUserAndLogIn = async (data) => {
+    const registerUser = async (data) => {
         try{
-            const loggedInUser = await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+            const registeredInUser = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password);
 
             const userToken = await firebase.auth().currentUser.getIdToken();
             requester.setAuthToken(userToken);
 
-            setNotification('User logged successfully!');
+            setNotification('User registered successfully!');
             
             timeoutRedirect(history, `/products`);
 
         }
         catch(e){
-            setNotification('You credentials are not correct! Please check you email and password!');
+            setNotification('Unsuccessfyll registration! User already exists!');
         };
     }
 
@@ -57,7 +57,7 @@ const LogIn = ({
                     <FormInput
                         name="email"
                         type="email" 
-                        placeholder="Please enter email address..."
+                        placeholder="Please enter email address..." 
                         defaultValue={email}
                         label='Email' 
                     />
@@ -70,11 +70,11 @@ const LogIn = ({
                     />
 
                     <div className={style['link-container']}>
-                        <Link className={style['link-redirect']} to="/register">Not&#32;registered&#32;yet?&#32;Register&#32;here&#32;&#32;<i class="fas fa-sign-in-alt"></i></Link>
+                        <Link className={style['link-redirect']} to="/login">LogIn&#32;&#32;<i class="fas fa-sign-in-alt"></i></Link>
                     </div>
 
                     <div className={style['button-wrapper']}>
-                        <input className="button" type="submit" value="LogIn"  />
+                        <input className="button" type="submit" value="Register"  />
                         <Link className="button" to="/products">Cancel</Link>
                     </div>
                 </form>
@@ -82,4 +82,4 @@ const LogIn = ({
     );
 }
 
-export default LogIn;
+export default Register;

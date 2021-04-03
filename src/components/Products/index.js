@@ -6,6 +6,8 @@ import requester from '../../services/app-service';
 
 import { useEffect, useState } from 'react';
 
+import Notification from '../Notification';
+
 import Product from '../Product';
 import NavigationCategories from '../NavigationCategories';
 
@@ -34,31 +36,28 @@ const Products = ({
         else{
             getProducts(category, currentCategoryItem);
         }
-
         
     }, [match])
     
     const getProducts = (category, currentCategoryItem) => {
-        /*
-        productsService.getAll(category)
-        */
+       
         requester.dataSet.getAll(category)
-            .then(res => {
-                if(category && category != 'all'){
-                    res = Object.entries(res)
-                    .filter(([key, value]) => value.category === category)
-                    .map(([id, record]) => ({id, ...record}) );
-                }
-                else{
-                    res = Object.entries(res)
-                    .map(([id, record]) => ({id, ...record}) );
-                }
+        .then(res => {
+            if(category && category != 'all'){
+                res = Object.entries(res)
+                .filter(([key, value]) => value.category === category)
+                .map(([id, record]) => ({id, ...record}) );
+            }
+            else{
+                res = Object.entries(res)
+                .map(([id, record]) => ({id, ...record}) );
+            }
 
-                setIsLoading(true);
-                setProducts(res);
-                setCurrentCategory(category);
-                setCurrentCategoryItem(currentCategoryItem);
-            })
+            setIsLoading(true);
+            setProducts(res);
+            setCurrentCategory(category);
+            setCurrentCategoryItem(currentCategoryItem);
+        });
 
     }
 
@@ -70,8 +69,12 @@ const Products = ({
         <div className={style.container}>
             <NavigationCategories menuItemClickHandler={menuItemClickHandler} currentCategoryItem={currentCategoryItem} />
 
-            <h1>{!isLoading ? 'Loading...' : ``}</h1>
+            {(products.length == 0 && isLoading) ? (
+                <Notification message="There are not products by selected category!" />
+            ) : <Notification message="" />}
 
+            <h1>{!isLoading ? 'Loading...' : ``}</h1>
+            
             <ul className={style['container-products']}>
                 {products.map(x => 
                     <Product key={x.id} {...x} categoryId={currentCategoryItem} />

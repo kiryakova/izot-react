@@ -19,7 +19,10 @@ const ProductDetails = ({
 
     useEffect(() => {
         requester.dataSet.getById(match.params.productId)
-            .then(res => setProduct(res) );
+            .then(res => setProduct(res) )
+            .catch(() => {
+                setNotification('The product is not found!');
+            });
     }, []);
 
     const deleteProduct = async () => {
