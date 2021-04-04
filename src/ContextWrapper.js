@@ -1,18 +1,15 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
 export const AuthContext = createContext({ 
-	auth: false,
-	/*user: null,
-	logIn: () => { },
-	logOut: () => { }*/
- })
+	user: {}
+ });
 
-const ContextWrapper = props => {
+const ContextWrapper = (props) => {
   return (
-    <AuthContext.Provider value={{auth: true}}>
+    <AuthContext.Provider value={{user: {}}}>
       {props.children}
     </AuthContext.Provider>
-  )
+  );
 }
 
-export default ContextWrapper
+export default ContextWrapper;

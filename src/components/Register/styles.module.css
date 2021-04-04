@@ -1,4 +1,4 @@
-.product-login-container {
+.login-container {
   padding: 50px 0px;
   display: flex;
   flex-direction: column;
@@ -6,6 +6,7 @@
   align-items: center;
 }
 
+/*
 .product-login-form {
   display: flex;
   flex-direction: column;
@@ -66,3 +67,4 @@
 .link-redirect {
   color:#36A7E8 !important;
 }
+*/

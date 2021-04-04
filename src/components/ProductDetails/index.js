@@ -2,13 +2,15 @@ import style from './styles.module.css';
 
 import requester from '../../services/app-service';
 
-import {useEffect, useState} from 'react';
-import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
+import { useEffect, useState, useContext } from 'react';
+import { timeoutRedirect } from '../../helpers/timeout-redirect.js';
 
 import { Link } from 'react-router-dom';
 
 import Image from '../Image';
 import Notification from '../Notification';
+
+import ContextWrapper from '../../ContextWrapper';
 
 const ProductDetails = ({
     match,
@@ -16,6 +18,9 @@ const ProductDetails = ({
 }) => {
     const [product, setProduct] = useState({});
     const [notification, setNotification] = useState('');
+    const context = useContext(ContextWrapper);
+
+    console.log(context);
 
     useEffect(() => {
         requester.dataSet.getById(match.params.productId)

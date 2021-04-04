@@ -64,7 +64,7 @@ const ProductAdd = ({
         }
 
         if(data.description.length < 7) {
-            setErrors({price: 'description should be at least 7 characters long!'});
+            setErrors({description: 'description should be at least 7 characters long!'});
         }
 
         /*

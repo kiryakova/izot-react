@@ -8,7 +8,7 @@ import NavigationItem from '../NavigationItem';
 
 const Header = () => {
     const [currentHeaderItem = 1, setCurrentHeaderItem] = useState();
-    
+
     const menuItemClickHandler = (id) => {
         setCurrentHeaderItem(id);
     }

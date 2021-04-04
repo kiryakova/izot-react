@@ -4,20 +4,23 @@ import firebase from '../../utils/firebase';
 import requester from '../../services/app-service';
 import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
 
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
-import FormInput from '../FormInput';
 import Notification from '../Notification';
+import FormLogInRegister from '../FormLogInRegister';
+
+//import ContextWrapper from '../../ContextWrapper';
 
 const LogIn = ({
     history
 }) => {
+    //const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [notification, setNotification] = useState('');
+    const [errors, setErrors] = useState({name: ''});
 
-    const onSubmitHandler = async (e) => {
+    const onSubmitHandlerLogIn = async (e) => {
         e.preventDefault();
 
         const { email, password } = e.target;
@@ -40,6 +43,8 @@ const LogIn = ({
             const userToken = await firebase.auth().currentUser.getIdToken();
             requester.setAuthToken(userToken);
 
+            //setUser({email: loggedInUser.email});
+
             setNotification('User logged successfully!');
             
             timeoutRedirect(history, `/products`);
@@ -50,35 +55,32 @@ const LogIn = ({
         };
     }
 
+    const handleChangeField = (name, value) => {
+        if(name == "email" && value.length == 0) {
+            setErrors({...errors, [name]: `${name} should be set!`});
+        }
+        else if(name == "email") {
+            const {email, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+
+        if(name == "password" && value.length == 0) {
+            setErrors({...errors, [name]: `${name} should be set!`});
+        }
+        else if(name == "password") {
+            const {password, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+
+    }
+
     return (
-        <div className={style['product-login-container']}>
-                <Notification message={notification} />
-                <form className={style['product-login-form']} onSubmit={onSubmitHandler}>
-                    <FormInput
-                        name="email"
-                        type="email" 
-                        placeholder="Please enter email address..."
-                        defaultValue={email}
-                        label='Email' 
-                    />
-
-                    <FormInput
-                        name="password"
-                        type="password"  
-                        defaultValue={password}
-                        label='Password' 
-                    />
-
-                    <div className={style['link-container']}>
-                        <Link className={style['link-redirect']} to="/register">Not&#32;registered&#32;yet?&#32;Register&#32;here&#32;&#32;<i class="fas fa-sign-in-alt"></i></Link>
-                    </div>
-
-                    <div className={style['button-wrapper']}>
-                        <input className="button" type="submit" value="LogIn"  />
-                        <Link className="button" to="/products">Cancel</Link>
-                    </div>
-                </form>
-            </div>
+    
+        <div className={style['login-container']}>
+            <Notification message={notification} />
+            <FormLogInRegister formType="LogIn" errors={errors} onSubmitHandler={onSubmitHandlerLogIn} handleChangeField={handleChangeField}></FormLogInRegister>
+        </div>
+        
     );
 }
 

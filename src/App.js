@@ -1,7 +1,7 @@
 import firebase from './utils/firebase';
 import './services/app-service';
 
-import React, {Suspense} from 'react';
+import React, {Suspense, useState} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 
 import ContextWrapper from './ContextWrapper';
@@ -24,9 +24,16 @@ const Register = React.lazy(() => import('./components/Register'));
 const LogIn = React.lazy(() => import('./components/LogIn'));
 const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
 
-function App() {
+function App(props) {
+
+  const [user, setUser] = useState(props.user ? {
+    ...props.user
+  } : {})
+
   return (
-    <ContextWrapper>
+    <ContextWrapper value={
+      user
+    }>
       <Header />
         <Suspense fallback={<div className="lazy-notification">Loading...</div>}>
           <Switch>
@@ -51,9 +58,5 @@ function App() {
     </ContextWrapper>
   );
 }
-/*<Route path="/products" render={(props) => <Contacts />} /> 
-<Route render={() => <h1 >Error Page</h1>} />
-<Route path="/products/:categoryId" exact component={Products} />
-<Route path="/products/product/:id" exact component={Product} />
-*/
+
 export default App;
