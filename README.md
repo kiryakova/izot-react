@@ -70,22 +70,40 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-### `npm react`
 
-This section installs react
+The project created with:
+##npx create-react-app .
+
+Additionally installed:
+### `npm react`
 
 ### `npm i react-dom`
 
-This section installs react-dom
-
 ### `npm i react-router-dom`
-
-This section installs react-router-dom
 
 ### `npm i firebase`
 
-This section installs firebase
+### `npm install cloudinary`
 
 ### `npm i styled-components`
 
-This section installs styled components
+
+## Technology stack
+- React.js
+- Firebase - Realtime Database and Authentication
+
+
+##Website of IZOTSERVIZ N.Zagora OOD
+##sales and service of fiscal devices - Cash registers, Fiscal printers and Elecronic scales
+
+## List of all functionalities
+1. Register
+2. Login
+3. Logout
+4. Products - all and by categories
+5. Add Product
+6. Edit Product
+7. Delete Product
+8. Product details
+9. Contacts
+
