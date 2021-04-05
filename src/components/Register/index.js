@@ -3,6 +3,7 @@ import style from './styles.module.css';
 import firebase from '../../utils/firebase';
 import requester from '../../services/app-service';
 import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
+import {verifyEmail, verifyPassword, verifyConfirmPassword, verifyConfirmPasswordOnly} from '../../helpers/verifications.js';
 
 import { useState } from 'react';
 
@@ -12,22 +13,45 @@ import FormLogInRegister from '../FormLogInRegister';
 const Register = ({
     history
 }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    //const [email, setEmail] = useState('');
+    //const [password, setPassword] = useState('');
+    //const [confirmPassword, setConfirmPassword] = useState('');
     const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({});
 
     const onSubmitHandlerRegister = async (e) => {
         e.preventDefault();
 
-        const { email, password } = e.target;
+        //setErrors({});
+
+        const { email, password, confirmPassword } = e.target;
 
         const data = {
             'email': email.value, 
-            'password' : password.value
+            'password' : password.value,
+            'confirmPassword' : confirmPassword.value
         };
 
+        let errEmail = await verifyEmail(data.email);
+        if(errEmail){console.log(data.email);
+            setErrors({...errors, email: errEmail});
+            
+        }
+        else {
+            const {email, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+
+        let errConfirmPassword =  await verifyConfirmPassword(data.password, data.confirmPassword);
+        if(errConfirmPassword){console.log(data.confirmPassword);
+            setErrors({...errors, confirmPassword: errConfirmPassword});
+            
+        }
+        else {
+            const {confirmPassword, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }
+        
         registerUser(data);
 
         e.stopPropagation();
@@ -47,27 +71,26 @@ const Register = ({
 
         }
         catch(e){
-            setNotification('Unsuccessfyll registration! User already exists!');
+            setNotification('Unsuccessfyll registration!');
         };
     }
 
     const handleChangeField = (name, value) => {
-
-        if(name == "email" && value.length == 0) {
-            setErrors({...errors, [name]: `${name} should be set!`});
+        let err = "";
+        if(name == "email"){
+            err = verifyEmail(value);
+            console.log(err);
         }
-        else if(name == "email" && value.length != 0) {
-            let patternEmail = RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$`, "");
-            if(!patternEmail.test(value)){
-                setErrors({...errors, [name]: `${name} is not valid!`});
-            }
-            else{
-                const {email, ...partialErrors} = errors;
-                setErrors({...partialErrors});
-            }
+        else if(name == "password"){
+            err = verifyPassword(value);
+        }
+        else if(name == "confirmPassword"){
+            err = verifyConfirmPasswordOnly(value);
         }
 
-        if(name == "password" && value.length == 0) {
+        setErrors({...errors, [name]: err});
+
+        /*if(name == "password" && value.length == 0) {
             setErrors({...errors, [name]: `${name} should be set!`});
         }
         else if(name == "password") {
@@ -81,7 +104,7 @@ const Register = ({
         else if(name == "confirmPassword") {
             const {confirmPassword, ...partialErrors} = errors;
             setErrors({...partialErrors});
-        }
+        }*/
 
     }
 

@@ -35,6 +35,9 @@ const ProductAdd = ({
             setErrors({file: 'Product image should be set!'});
             return;
         }
+        else{
+            setErrors({});
+        }
 
         let formData = new FormData();
         formData.append('file', file);
@@ -55,24 +58,19 @@ const ProductAdd = ({
         };
 
         if(data.name.length < 5) {
-            setErrors({name: 'product name should be at least 5 characters long!'});
+            setErrors({name: 'Product name should be at least 5 characters long!'});
             return;
         }
 
-        if(data.price.length < 1) {
-            setErrors({price: 'price should be set!'});
+        if(data.price <= 0) {
+            setErrors({price: 'Price should be set!'});
+            return;
         }
 
         if(data.description.length < 7) {
-            setErrors({description: 'description should be at least 7 characters long!'});
+            setErrors({description: 'Description should be at least 7 characters long!'});
+            return;
         }
-
-        /*
-        requester.dataSet.createEntity(data)
-            .then(() => {
-                history.push(`/products`);
-            });
-        */
 
         if(Object.keys(errors).length == 0){
             addProduct(data);

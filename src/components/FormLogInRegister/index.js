@@ -9,6 +9,8 @@ const FormLogInRegister = ({ formType, errors, onSubmitHandler, handleChangeFiel
 
     return (
         <form className={style['login-form']} onSubmit={onSubmitHandler} fileds>
+                <div className={style['input-container']}>
+                <i class="fas fa-user"></i>
                 <FormInput
                     label='Email' 
                     name="email"
@@ -18,7 +20,10 @@ const FormLogInRegister = ({ formType, errors, onSubmitHandler, handleChangeFiel
                     handleChange={handleChangeField} 
                 />
                 <FormErrorField message={errors.email} />
+                </div>
 
+                <div className={style['input-container']}>
+                <i class="fas fa-key"></i>
                 <FormInput
                     label='Password' 
                     name="password"
@@ -27,8 +32,10 @@ const FormLogInRegister = ({ formType, errors, onSubmitHandler, handleChangeFiel
                     handleChange={handleChangeField} 
                 />
                 <FormErrorField message={errors.password} />
+                </div>
 
                 {(formType=="Register") ? (<div className={style['input-container']}>
+                    <i class="fas fa-key"></i>
                     <FormInput
                         label='Confirm Password' 
                         name="confirmPassword"

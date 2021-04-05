@@ -61,4 +61,12 @@
 
 .login-form .input-container {
   width: 100%;
+  position: relative;
+}
+
+.login-form .input-container i {
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  top: 48px;
 }

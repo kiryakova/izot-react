@@ -1,4 +1,3 @@
-/*export const cloudinaryService = (cloudinaryApiKey, cloudinaryName, cloudinarySecret) => {*/
 export const uploadImage = (data) => {
     return fetch(`https://api.cloudinary.com/v1_1/stela-cloud/image/upload`, {
         method: 'POST',
@@ -6,4 +5,3 @@ export const uploadImage = (data) => {
     })
     .then(res => res.json());
 };
-
