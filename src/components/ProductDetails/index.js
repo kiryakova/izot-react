@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import Image from '../Image';
 import Notification from '../Notification';
 
-import ContextWrapper from '../../ContextWrapper';
+import {AuthContext} from '../../ContextWrapper';
 
 const ProductDetails = ({
     match,
@@ -18,9 +18,7 @@ const ProductDetails = ({
 }) => {
     const [product, setProduct] = useState({});
     const [notification, setNotification] = useState('');
-    const context = useContext(ContextWrapper);
-
-    console.log(context);
+    const [isAuthenticated, username] = useContext(AuthContext);
 
     useEffect(() => {
         requester.dataSet.getById(match.params.productId)
@@ -36,14 +34,6 @@ const ProductDetails = ({
             setNotification('The product is deleted!');
             
             timeoutRedirect(history, `/products/${match.params.categoryId}/category/${product.category}`);
-
-            /*
-            const timer = setTimeout(() => {
-                history.push(`/products/${match.params.categoryId}/category/${product.category}`);
-              }, 3000);
-            
-            return () => clearTimeout(timer);
-            */
 
         }
         catch(e){
@@ -63,8 +53,9 @@ const ProductDetails = ({
                 <p>{product.description}</p>
 
                 <div className={style['button-wrapper']}>
-                    <Link to={`/products/${match.params.categoryId}/${product.category}/edit/${match.params.productId}`}><button>Edit</button></Link>
-                    <Link to="#"><button onClick={deleteProduct}>Delete</button></Link>
+                    {isAuthenticated ? (<div><Link to={`/products/${match.params.categoryId}/${product.category}/edit/${match.params.productId}`}><button>Edit</button></Link>
+                    <Link to="#"><button onClick={deleteProduct}>Delete</button></Link></div>) : ''}
+                    
                     <Link to={`/products/${match.params.categoryId}/category/${product.category}`}><button>Back to products...</button></Link>
                 </div>
             </article>

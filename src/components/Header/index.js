@@ -9,10 +9,9 @@ import NavigationItem from '../NavigationItem';
 import {AuthContext} from '../../ContextWrapper';
 
 const Header = () => {
-    const [isAuthenticated, username] = useContext(AuthContext);
-console.log(isAuthenticated);
-    const [currentHeaderItem = 1, setCurrentHeaderItem] = useState();
 
+    const [currentHeaderItem = 1, setCurrentHeaderItem] = useState();
+    const [isAuthenticated, username] = useContext(AuthContext);
     const HEADER_MENU_ITEMS = getNavigationItems(isAuthenticated);
 
     const menuItemClickHandler = (id) => {

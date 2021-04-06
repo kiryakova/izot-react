@@ -26,7 +26,7 @@ const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  /*const [user, setUser] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -35,10 +35,14 @@ function App() {
   const authInfo = {
     isAuthenticated: Boolean(user),
     username: user?.email,
-  };
+  };*/
 
+  /*
   return (
-    <ContextWrapper {...authInfo} >
+  <ContextWrapper {...authInfo} >
+  */
+  return (
+    <ContextWrapper>
       <Header />
         <Suspense fallback={<div className="lazy-notification">Loading...</div>}>
           <Switch>
