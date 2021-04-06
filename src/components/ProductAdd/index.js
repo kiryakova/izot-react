@@ -1,11 +1,11 @@
-import { CATEGORIES } from '../../config/categories';
+import { CATEGORIES } from '../../utils/categories';
 
 import requester from '../../services/app-service';
 
 import style from './styles.module.css';
 
-import { uploadImage } from '../../services/cloudinary-service.js';
-import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
+import { uploadImage } from '../../services/cloudinary-service';
+import {timeoutRedirect} from '../../helpers/timeout-redirect';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';

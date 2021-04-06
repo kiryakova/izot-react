@@ -2,7 +2,7 @@ import style from './styles.module.css';
 
 import firebase from '../../utils/firebase';
 import requester from '../../services/app-service';
-import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
+import {timeoutRedirect} from '../../helpers/timeout-redirect';
 import {verifyEmail, verifyPassword, verifyConfirmPassword, verifyConfirmPasswordOnly} from '../../helpers/verifications.js';
 
 import { useState } from 'react';
@@ -34,7 +34,8 @@ const Register = ({
 
         let errEmail = await verifyEmail(data.email);
         if(errEmail){console.log(data.email);
-            setErrors({...errors, email: errEmail});
+            setErrors(oldErrors => oldErrors.email = errEmail);
+            //setErrors({...errors, email: errEmail});
             
         }
         else {

@@ -2,14 +2,12 @@ import style from './styles.module.css';
 
 import firebase from '../../utils/firebase';
 import requester from '../../services/app-service';
-import {timeoutRedirect} from '../../helpers/timeout-redirect.js';
+import {timeoutRedirect} from '../../helpers/timeout-redirect';
 
 import { useContext, useState } from 'react';
 
 import Notification from '../Notification';
 import FormLogInRegister from '../FormLogInRegister';
-
-//import ContextWrapper from '../../ContextWrapper';
 
 const LogIn = ({
     history
@@ -43,7 +41,7 @@ const LogIn = ({
             const userToken = await firebase.auth().currentUser.getIdToken();
             requester.setAuthToken(userToken);
 
-            //setUser({email: loggedInUser.email});
+            //setUser({user: loggedInUser});
 
             setNotification('User logged successfully!');
             

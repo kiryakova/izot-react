@@ -1,7 +1,7 @@
 import firebase from './utils/firebase';
 import './services/app-service';
 
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useState, useEffect} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 
 import ContextWrapper from './ContextWrapper';
@@ -24,16 +24,21 @@ const Register = React.lazy(() => import('./components/Register'));
 const LogIn = React.lazy(() => import('./components/LogIn'));
 const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
 
-function App(props) {
+function App() {
 
-  const [user, setUser] = useState(props.user ? {
-    ...props.user
-  } : {})
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
+
+  const authInfo = {
+    isAuthenticated: Boolean(user),
+    username: user?.email,
+  };
 
   return (
-    <ContextWrapper value={
-      user
-    }>
+    <ContextWrapper {...authInfo} >
       <Header />
         <Suspense fallback={<div className="lazy-notification">Loading...</div>}>
           <Switch>

@@ -12,13 +12,13 @@ const firebaseConfig = {
     appId: "1:1019658575338:web:c621de020caa073db32693"
 };
 
-//if(!firebase.app.length){
+if(!firebase.apps.length){
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-//}
+}
 
 
-firebase.auth().onAuthStateChanged((user) => {
+/*firebase.auth().onAuthStateChanged((user) => {
     if(user){
         console.log("LoggedIn:");
         console.log(user);
@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged((user) => {
     else{
         console.log("LoggedOut:");
     }
-});
+});*/
 
 export default firebase;
 
