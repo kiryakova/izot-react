@@ -6,9 +6,15 @@ export const AuthContext = createContext({
   username: ''
 });
 
+export const PageContext = createContext({
+  currentHeaderItem: 1,
+  setCurrentHeaderItem: () => {}
+});
+
 const ContextWrapper = (props) => {
   
   const [user, setUser] = useState(null);
+  const [currentHeaderItem, setCurrentHeaderItem] = useState(1);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -22,9 +28,14 @@ const ContextWrapper = (props) => {
   return (
     <AuthContext.Provider value={[
       authInfo.isAuthenticated,
-      authInfo.username,
+      authInfo.username
+    ]}>
+    <PageContext.Provider value={[
+      currentHeaderItem,
+      setCurrentHeaderItem
     ]}>
       {props.children}
+    </PageContext.Provider>
     </AuthContext.Provider>
   );
 }

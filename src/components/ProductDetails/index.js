@@ -18,7 +18,7 @@ const ProductDetails = ({
 }) => {
     const [product, setProduct] = useState({});
     const [notification, setNotification] = useState('');
-    const [isAuthenticated, username] = useContext(AuthContext);
+    const [isAuthenticated] = useContext(AuthContext);
 
     useEffect(() => {
         requester.dataSet.getById(match.params.productId)

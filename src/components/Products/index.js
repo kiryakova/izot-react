@@ -4,12 +4,14 @@ import style from './styles.module.css';
 
 import requester from '../../services/app-service';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import Notification from '../Notification';
 
 import Product from '../Product';
 import NavigationCategories from '../NavigationCategories';
+
+import {PageContext} from '../../ContextWrapper';
 
 const Products = ({
     match
@@ -18,6 +20,8 @@ const Products = ({
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
     const [currentCategory, setCurrentCategory] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [currentHeaderItem, setCurrentHeaderItem] = useContext(PageContext);
+    setCurrentHeaderItem(1);
 
     useEffect(() => {
         let category = match.params.category;

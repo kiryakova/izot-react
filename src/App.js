@@ -25,22 +25,6 @@ const LogIn = React.lazy(() => import('./components/LogIn'));
 const ErrorPage = React.lazy(() => import('./components/ErrorPage'));
 
 function App() {
-
-  /*const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
-
-  const authInfo = {
-    isAuthenticated: Boolean(user),
-    username: user?.email,
-  };*/
-
-  /*
-  return (
-  <ContextWrapper {...authInfo} >
-  */
   return (
     <ContextWrapper>
       <Header />

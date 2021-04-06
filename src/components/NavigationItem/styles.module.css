@@ -24,11 +24,11 @@ li ul .list-item:not(:last-child) {
     border-bottom: 1px solid #FFFFFF;
 }
 
-/*
+
 .active-navigation-item {
     color: #FFFFFF !important;
 }
-*/
+
 
 .category-list-item {
   margin: 10px;

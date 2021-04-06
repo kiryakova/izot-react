@@ -8,13 +8,15 @@ import { uploadImage } from '../../services/cloudinary-service';
 import {timeoutRedirect} from '../../helpers/timeout-redirect';
 
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import FormInput from '../FormInput';
 import FormTextarea from '../FormTextarea';
 import FormDropdown from '../FormDropdown';
 import FormErrorField from '../FormErrorField';
 import Notification from '../Notification';
+
+import {PageContext} from '../../ContextWrapper';
 
 const ProductAdd = ({
     history
@@ -25,6 +27,7 @@ const ProductAdd = ({
     const [file, setFile] = useState();
     const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({name: '', file: null});
+    const [currentHeaderItem, setCurrentHeaderItem] = useContext(PageContext);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -85,16 +88,12 @@ const ProductAdd = ({
             await requester.dataSet.createEntity(data);
             setNotification('The product is created!');
             
+            //setCurrentHeaderItem(1);
             timeoutRedirect(history, `/products`);
-            /*const timer = setTimeout(() => {
-                history.push(`/products`);
-                }, 3000);
-            
-            return () => clearTimeout(timer);*/
 
         }
         catch(e){
-            setNotification('The product is not deleted!');
+            setNotification('The product is not created!');
         };
     }
 

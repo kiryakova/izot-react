@@ -6,12 +6,13 @@ import getNavigationItems from '../../utils/navigation';
 import { useState, useContext } from 'react';
 
 import NavigationItem from '../NavigationItem';
-import {AuthContext} from '../../ContextWrapper';
+import {AuthContext, PageContext} from '../../ContextWrapper';
 
 const Header = () => {
 
-    const [currentHeaderItem = 1, setCurrentHeaderItem] = useState();
+    //const [currentHeaderItem, setCurrentHeaderItem] = useState(1);
     const [isAuthenticated, username] = useContext(AuthContext);
+    const [currentHeaderItem, setCurrentHeaderItem] = useContext(PageContext);
     const HEADER_MENU_ITEMS = getNavigationItems(isAuthenticated);
 
     const menuItemClickHandler = (id) => {

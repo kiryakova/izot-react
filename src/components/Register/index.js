@@ -34,9 +34,8 @@ const Register = ({
 
         let errEmail = await verifyEmail(data.email);
         if(errEmail){console.log(data.email);
-            setErrors(oldErrors => oldErrors.email = errEmail);
             //setErrors({...errors, email: errEmail});
-            
+            setErrors(oldErrors => oldErrors.email = errEmail);
         }
         else {
             const {email, ...partialErrors} = errors;
@@ -46,7 +45,6 @@ const Register = ({
         let errConfirmPassword =  await verifyConfirmPassword(data.password, data.confirmPassword);
         if(errConfirmPassword){console.log(data.confirmPassword);
             setErrors({...errors, confirmPassword: errConfirmPassword});
-            
         }
         else {
             const {confirmPassword, ...partialErrors} = errors;
@@ -72,7 +70,7 @@ const Register = ({
 
         }
         catch(e){
-            setNotification('Unsuccessfyll registration!');
+            setNotification('Unsuccessfyll registration! User already exist!');
         };
     }
 
@@ -80,7 +78,6 @@ const Register = ({
         let err = "";
         if(name == "email"){
             err = verifyEmail(value);
-            console.log(err);
         }
         else if(name == "password"){
             err = verifyPassword(value);
