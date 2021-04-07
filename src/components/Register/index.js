@@ -70,7 +70,7 @@ const Register = ({
 
         }
         catch(e){
-            setNotification('Unsuccessfyll registration! User already exist!');
+            setNotification('Unsuccessfyll registration!');
         };
     }
 

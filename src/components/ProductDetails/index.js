@@ -17,6 +17,7 @@ const ProductDetails = ({
     history
 }) => {
     const [product, setProduct] = useState({});
+    const [countPurschases, setCountPurschases] = useState(0);
     const [notification, setNotification] = useState('');
     const [isAuthenticated] = useContext(AuthContext);
 
@@ -41,6 +42,14 @@ const ProductDetails = ({
         };
     }
 
+    const buyProduct = () => {
+        setCountPurschases(oldState => oldState + 1);
+    }
+
+    const unbuyProduct = () => {
+        setCountPurschases((oldState) => (oldState > 0 ? oldState - 1 : 0));
+    }
+
     return (
         <section className = {style['container-product-details']}>
             <article className = {style['product-details']}>
@@ -49,12 +58,25 @@ const ProductDetails = ({
                 <h5>{product.name}</h5>
                 <p>Category: {product.category}</p>
                 <h6>Price: <span>{product.price} лв.</span></h6>
-                
                 <p>{product.description}</p>
+                
+                {isAuthenticated ? <h6>Bought from you: <span>{countPurschases}</span></h6> : ''}
 
+                <div className={style['button-wrapper-buy']}>
+                    {isAuthenticated ? (
+                    <div><Link to="#">
+                    <button onClick={unbuyProduct}>-</button>
+                    <button>Buy</button>
+                    <button onClick={buyProduct}>+</button>
+                    </Link></div>
+                    ) : ''}
+                </div>
+                
                 <div className={style['button-wrapper']}>
-                    {isAuthenticated ? (<div><Link to={`/products/${match.params.categoryId}/${product.category}/edit/${match.params.productId}`}><button>Edit</button></Link>
-                    <Link to="#"><button onClick={deleteProduct}>Delete</button></Link></div>) : ''}
+                    {isAuthenticated ? (
+                    <div><Link to={`/products/${match.params.categoryId}/${product.category}/edit/${match.params.productId}`}><button>Edit</button></Link>
+                    <Link to="#"><button onClick={deleteProduct}>Delete</button></Link></div>
+                    ) : ''}
                     
                     <Link to={`/products/${match.params.categoryId}/category/${product.category}`}><button>Back to products...</button></Link>
                 </div>

@@ -50,13 +50,6 @@ const ProductEdit = ({
         if(data.description.length < 7) {
             setErrors({...errors, description: 'description should be at least 7 characters long!'});
         }
-        
-        /*
-        requester.dataSet.patchEntity(data, match.params.productId)
-            .then(() => {
-                history.push(`/products/${match.params.categoryId}/category/${product.category}`);
-            });
-        */
 
         if(Object.keys(errors).length == 0){
             editProduct(data, match.params.productId);
@@ -67,20 +60,15 @@ const ProductEdit = ({
     };
 
     const editProduct = async (data, productId) => {
-        try{
+        try{console.log(data);console.log(productId);
             await requester.dataSet.patchEntity(data, productId);
             setNotification('The product is edited!');
             
             timeoutRedirect(history, `/products/${match.params.categoryId}/category/${product.category}`);
-            /*const timer = setTimeout(() => {
-                history.push(`/products/${match.params.categoryId}/category/${product.category}`);
-                }, 3000);
-            
-            return () => clearTimeout(timer);*/
 
         }
         catch(e){
-            setNotification('The product is not deleted!');
+            setNotification('The product is not edited!');
         };
     }
 
