@@ -121,6 +121,14 @@ const ProductAdd = ({
             const {description, ...partialErrors} = errors;
             setErrors({...partialErrors});
         }
+
+        /*if(!file) {
+            setErrors({...errors, file: `Product image should be set!`});
+        }
+        else {
+            const {file, ...partialErrors} = errors;
+            setErrors({...partialErrors});
+        }*/
     }
 
     const onChangeHandlerFile = (e) => {

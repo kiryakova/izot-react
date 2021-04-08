@@ -1,0 +1,22 @@
+.cart-container {
+  width: 70%;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-container h2 {
+  margin: 30px 0px;
+}
+
+.cart-container h2,
+.cart-empty-message {
+  color: #36A7E8;
+}
+
+.cart-empty-message {
+  text-align: center;
+  margin: 200px 0px;
+}

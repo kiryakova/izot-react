@@ -10,18 +10,22 @@ import { Link } from 'react-router-dom';
 import Image from '../Image';
 import Notification from '../Notification';
 
-import {AuthContext} from '../../ContextWrapper';
+import {AuthContext, CartContext} from '../../ContextWrapper';
 
 const ProductDetails = ({
     match,
     history
 }) => {
     const [product, setProduct] = useState({});
+    const [cartItems, setCartItems] = useContext(CartContext);
     const [countPurschases, setCountPurschases] = useState(0);
     const [notification, setNotification] = useState('');
     const [isAuthenticated] = useContext(AuthContext);
-
+    
     useEffect(() => {
+        let count = cartItems[match.params.productId] ? (cartItems[match.params.productId].count) : Number(0);
+        setCountPurschases(count);
+
         requester.dataSet.getById(match.params.productId)
             .then(res => setProduct(res) )
             .catch(() => {
@@ -42,12 +46,14 @@ const ProductDetails = ({
         };
     }
 
-    const buyProduct = () => {
-        setCountPurschases(oldState => oldState + 1);
+    const buyProduct = async () => {
+        await setCountPurschases(oldState => oldState + 1);
+        setCartItems({...cartItems, [match.params.productId]: {name: product.name, price: product.price, count: (countPurschases + 1)}});
     }
 
-    const unbuyProduct = () => {
-        setCountPurschases((oldState) => (oldState > 0 ? oldState - 1 : 0));
+    const unbuyProduct = async () => {
+        await setCountPurschases((oldState) => (Number(oldState) > 0 ? (oldState - 1) : Number(0)));
+        setCartItems({...cartItems, [match.params.productId]: {name: product.name, price: product.price, count: ((countPurschases > 0) ? (countPurschases - 1) : 0)}});
     }
 
     return (
@@ -57,7 +63,7 @@ const ProductDetails = ({
                 <Image src={product.imageURL} />
                 <h5>{product.name}</h5>
                 <p>Category: {product.category}</p>
-                <h6>Price: <span>{product.price} лв.</span></h6>
+                <h6>Price: <span>{product.price} lv.</span></h6>
                 <p>{product.description}</p>
                 
                 {isAuthenticated ? <h6>Bought from you: <span>{countPurschases}</span></h6> : ''}
