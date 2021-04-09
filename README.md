@@ -93,7 +93,7 @@ Additionally installed:
 - Firebase - Realtime Database and Authentication
 
 
-## Website of IZOTSERVIZ N.Zagora OOD - sales and service of fiscal devices - Cash registers, Fiscal printers and Elecronic scales
+## Website of IZOTSERVIZ N.Zagora OOD - sales and service of fiscal devices - Cash registers, Fiscal printers and Electronic scales
 
 ## List of all functionalities
 1. Register
