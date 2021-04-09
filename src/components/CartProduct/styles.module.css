@@ -24,12 +24,12 @@
 }
 
 .product-item div p {
-  color: rgb(48, 47, 47);
+  color: #3d3d3d;
   font-size: 20px;
 }
 
 .product-item span {
-  color: rgb(170, 12, 12);
+  color: #aa0c0c;
   /*color: rgb(61, 61, 61);*/
   font-size: 20px;
   font-weight: bold;

@@ -106,4 +106,6 @@ Additionally installed:
 7. Delete Product
 8. Product details
 9. Contacts
+10. Buy Product
+11. Cart
 

@@ -29,7 +29,7 @@ const CartProducts = ({
     return (
         <article className={style['product-item']}>
             <div><p>Product Name: <span>{name}</span></p></div>
-            <div><p>Price: <span>{price} lv.</span></p></div>
+            <div><p>Price per piece: <span>{price}</span> lv.</p></div>
             <div><p>Count: <span>{countPurschases}</span></p></div>
             
             {isAuthenticated ? (
