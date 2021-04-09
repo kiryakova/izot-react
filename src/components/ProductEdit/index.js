@@ -18,16 +18,15 @@ const ProductEdit = ({
     history
 }) => {
     let [product, setProduct] = useState({});
-    const [price, setPrice] = useState();
-    const [description, setDescription] = useState();
     const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         requester.dataSet.getById(match.params.productId)
-            .then(res => {
-                setProduct(res);
-            });
+            .then(res => setProduct(res))
+            .catch(() => {
+                setNotification('The product is not found!');
+            });;
     }, []);
 
     const onSubmitHandler = (e) => {
@@ -60,10 +59,9 @@ const ProductEdit = ({
     };
 
     const editProduct = async (data, productId) => {
-        try{console.log(data);console.log(productId);
+        try{
             await requester.dataSet.patchEntity(data, productId);
             setNotification('The product is edited!');
-            
             timeoutRedirect(history, `/products/${match.params.categoryId}/category/${product.category}`);
 
         }

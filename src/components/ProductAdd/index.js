@@ -8,7 +8,7 @@ import { uploadImage } from '../../services/cloudinary-service';
 import {timeoutRedirect} from '../../helpers/timeout-redirect';
 
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import FormInput from '../FormInput';
 import FormTextarea from '../FormTextarea';
@@ -27,7 +27,6 @@ const ProductAdd = ({
     const [file, setFile] = useState();
     const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({name: '', file: null});
-    const [currentHeaderItem, setCurrentHeaderItem] = useContext(PageContext);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();

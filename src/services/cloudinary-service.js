@@ -3,5 +3,8 @@ export const uploadImage = (data) => {
         method: 'POST',
         body: data
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .catch(() => {
+        console.log('There is a problem with Cloudinary!');
+    });
 };

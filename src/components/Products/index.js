@@ -20,27 +20,34 @@ const Products = ({
     const [currentCategoryItem, setCurrentCategoryItem] = useState(1);
     const [currentCategory, setCurrentCategory] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [notification, setNotification] = useState('');
     const [currentHeaderItem, setCurrentHeaderItem] = useContext(PageContext);
     setCurrentHeaderItem(1);
 
     useEffect(() => {
-        let category = match.params.category;
+        try{
+            let category = match.params.category;
 
-        if (category == currentCategory) {
-            return;
-        }
-        
-        let categoryId = match.params.categoryId;
-
-        if(categoryId){
-            category = CATEGORIES_MENU_ITEMS.filter(x => x.id == categoryId).map(x => x)[0].value;
+            if (category == currentCategory) {
+                return;
+            }
             
-            getProducts(category, categoryId);
-        }
-        else{
-            getProducts(category, currentCategoryItem);
-        }
+            let categoryId = match.params.categoryId;
+
+            if(categoryId){
+                category = CATEGORIES_MENU_ITEMS.filter(x => x.id == categoryId).map(x => x)[0].value;
+                
+                getProducts(category, categoryId);
+            }
+            else{
+                getProducts(category, currentCategoryItem);
+            }
         
+        }
+        catch(e){
+            setNotification('There are not products!');
+        };
+
     }, [match])
     
     const getProducts = (category, currentCategoryItem) => {
@@ -61,7 +68,10 @@ const Products = ({
             setProducts(res);
             setCurrentCategory(category);
             setCurrentCategoryItem(currentCategoryItem);
-        });
+        })
+        .catch(() => {
+            setNotification('There are not products!');
+        });;
 
     }
 
@@ -72,6 +82,7 @@ const Products = ({
     return (
         <div className={style.container}>
             <NavigationCategories menuItemClickHandler={menuItemClickHandler} currentCategoryItem={currentCategoryItem} />
+            <Notification message={notification} />
 
             {(products.length == 0 && isLoading) ? (
                 <Notification message="There are not products by selected category!" />

@@ -33,16 +33,6 @@ export const fireBaseRequestFactory = (apiKey, nameDB, token) => {
         
     };
 
-    //**Receive any javascript and creates entity in pre configured collection and the provided Id
-    //**@param {{[key:string]: any}} entityBody 
-    //**@param {string} id
-    const createEntityWithId = (entityBody, id) => {
-        return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:''), {
-            method: 'PUT',
-            body: JSON.stringify(entityBody)
-        }).then(x => x.json());
-    };
-
     //**Receive any javascript and overrides entity in pre configured collection based on the provided Id
     //**@param {{[key:string]: any}} entityBody 
     //**@param {string} id

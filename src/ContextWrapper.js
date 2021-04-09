@@ -12,8 +12,8 @@ export const PageContext = createContext({
 });
 
 export const CartContext = createContext({
-  cartItems: [],
-  setCartItems: () => []
+  cartItems: {},
+  setCartItems: () => {}
 });
 
 const ContextWrapper = (props) => {

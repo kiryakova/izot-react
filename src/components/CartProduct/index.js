@@ -18,12 +18,12 @@ const CartProducts = ({
 
     const buyProduct = async () => {
         await setCountPurschases(oldState => oldState + 1);
-        setCartItems({...cartItems, [id]: {name: name, price: price, count: (countPurschases + 1)}});
+        await setCartItems({...cartItems, [id]: {name: name, price: price, count: (countPurschases + 1)}});
     }
 
     const unbuyProduct = async () => {
         await setCountPurschases((oldState) => (Number(oldState) > 0 ? (oldState - 1) : Number(0)));
-        setCartItems({...cartItems, [id]: {name: name, price: price, count: ((countPurschases > 0) ? (countPurschases - 1) : 0)}});
+        await setCartItems({...cartItems, [id]: {name: name, price: price, count: ((countPurschases > 0) ? (countPurschases - 1) : 0)}});
     }
 
     return (
