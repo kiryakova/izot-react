@@ -85,7 +85,7 @@ const Products = ({
             <Notification message={notification} />
 
             {(products.length == 0 && isLoading) ? (
-                <Notification message="There are not products by selected category!" />
+                <h3 className={style['cart-empty-message']}>There are not products by selected category!</h3>
             ) : <Notification message="" />}
 
             <h1>{!isLoading ? 'Loading...' : ``}</h1>

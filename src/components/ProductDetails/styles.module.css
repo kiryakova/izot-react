@@ -9,6 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 30%;
 }
 
 .product-details h5, h6, p {
@@ -29,6 +30,11 @@
 
 .product-details p {
   color: #3d3d3d;
+  text-align: justify;
+}
+
+.product-details p span {
+  font-weight: bold;
 }
 
 .product-details h6 span {
@@ -47,7 +53,7 @@
 }
 
 .product-details .button-wrapper {
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .product-details .button-wrapper a button,

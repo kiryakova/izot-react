@@ -16,8 +16,6 @@ import FormDropdown from '../FormDropdown';
 import FormErrorField from '../FormErrorField';
 import Notification from '../Notification';
 
-import {PageContext} from '../../ContextWrapper';
-
 const ProductAdd = ({
     history
 }) => {
@@ -87,7 +85,6 @@ const ProductAdd = ({
             await requester.dataSet.createEntity(data);
             setNotification('The product is created!');
             
-            //setCurrentHeaderItem(1);
             timeoutRedirect(history, `/products`);
 
         }
@@ -98,7 +95,7 @@ const ProductAdd = ({
 
     const handleChangeField = (name, value) => {
         if(name == "name" && value.length < 5) {
-            setErrors({...errors, [name]: `Product ${name} should be at least 5 characters long!`});
+            setErrors({...errors, [name]: `product ${name} should be at least 5 characters long!`});
         }
         else if(name == "name") {
             const {name, ...partialErrors} = errors;

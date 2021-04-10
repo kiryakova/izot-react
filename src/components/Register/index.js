@@ -13,16 +13,13 @@ import FormLogInRegister from '../FormLogInRegister';
 const Register = ({
     history
 }) => {
-    //const [email, setEmail] = useState('');
-    //const [password, setPassword] = useState('');
-    //const [confirmPassword, setConfirmPassword] = useState('');
     const [notification, setNotification] = useState('');
     const [errors, setErrors] = useState({});
 
     const onSubmitHandlerRegister = async (e) => {
         e.preventDefault();
 
-        //setErrors({});
+        setErrors({});
 
         const { email, password, confirmPassword } = e.target;
 
@@ -33,22 +30,22 @@ const Register = ({
         };
 
         let errEmail = await verifyEmail(data.email);
-        if(errEmail){console.log(data.email);
-            //setErrors({...errors, email: errEmail});
-            setErrors(oldErrors => oldErrors.email = errEmail);
+        if(errEmail){
+            setErrors({email: errEmail});
+            //setErrors(oldErrors => oldErrors.email = errEmail);
+            return;
         }
-        else {
-            const {email, ...partialErrors} = errors;
-            setErrors({...partialErrors});
+
+        let errPassword = await verifyPassword(data.password);
+        if(errPassword){
+            setErrors({password: errPassword});
+            return;
         }
 
         let errConfirmPassword =  await verifyConfirmPassword(data.password, data.confirmPassword);
         if(errConfirmPassword){console.log(data.confirmPassword);
-            setErrors({...errors, confirmPassword: errConfirmPassword});
-        }
-        else {
-            const {confirmPassword, ...partialErrors} = errors;
-            setErrors({...partialErrors});
+            setErrors({confirmPassword: errConfirmPassword});
+            return;
         }
         
         registerUser(data);
@@ -59,7 +56,7 @@ const Register = ({
 
     const registerUser = async (data) => {
         try{
-            const registeredInUser = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password);
+            await firebase.auth().createUserWithEmailAndPassword(data.email, data.password);
 
             const userToken = await firebase.auth().currentUser.getIdToken();
             requester.setAuthToken(userToken);
@@ -70,7 +67,7 @@ const Register = ({
 
         }
         catch(e){
-            setNotification('Unsuccessfyll registration!');
+            setNotification('Unsuccessfyll registration! User already exists!');
         };
     }
 
@@ -87,23 +84,6 @@ const Register = ({
         }
 
         setErrors({...errors, [name]: err});
-
-        /*if(name == "password" && value.length == 0) {
-            setErrors({...errors, [name]: `${name} should be set!`});
-        }
-        else if(name == "password") {
-            const {password, ...partialErrors} = errors;
-            setErrors({...partialErrors});
-        }
-
-        if(name == "confirmPassword" && value.length == 0) {
-            setErrors({...errors, [name]: `${name} should be set!`});
-        }
-        else if(name == "confirmPassword") {
-            const {confirmPassword, ...partialErrors} = errors;
-            setErrors({...partialErrors});
-        }*/
-
     }
 
     return (

@@ -18,7 +18,7 @@ const Product = ({
             <Image src={imageURL} />
             <h5>{name}</h5>
             <p>Category: {category}</p>
-            <h6>Price: <span>{price} лв.</span></h6>
+            <h6>Price: <span>{price} lv.</span></h6>
             <div className={style['button-wrapper']}>
                 <Link to={`/products/${categoryId}/${category}/details/${id}`}><button>Details</button></Link>
             </div>

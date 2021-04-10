@@ -3,9 +3,9 @@ import style from './styles.module.css';
 import requester from '../../services/app-service';
 
 import { useEffect, useState, useContext } from 'react';
-import { timeoutRedirect } from '../../helpers/timeout-redirect';
-
 import { Link } from 'react-router-dom';
+
+import { timeoutRedirect } from '../../helpers/timeout-redirect';
 
 import Image from '../Image';
 import Notification from '../Notification';
@@ -35,6 +35,10 @@ const ProductDetails = ({
 
     const deleteProduct = async () => {
         try{
+            /*if(countPurschases > 0){
+                setNotification('You cannot delete this product! The product is bought!');
+                return;
+            }*/
             await requester.dataSet.deleteEntity(match.params.productId);
             setNotification('The product is deleted!');
             
@@ -62,7 +66,7 @@ const ProductDetails = ({
                 <Notification message={notification} />
                 <Image src={product.imageURL} />
                 <h5>{product.name}</h5>
-                <p>Category: {product.category}</p>
+                <p><span>Category: </span>{product.category}</p>
                 <h6>Price: <span>{product.price} lv.</span></h6>
                 <p>{product.description}</p>
                 

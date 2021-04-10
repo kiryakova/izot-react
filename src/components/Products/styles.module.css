@@ -35,3 +35,8 @@
   grid-gap: 1.5rem 3rem;
 }
 
+.cart-empty-message {
+  color: #36A7E8;
+  text-align: center;
+  margin: 200px 0px;
+}

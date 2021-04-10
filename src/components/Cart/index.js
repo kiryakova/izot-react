@@ -3,13 +3,17 @@ import style from './styles.module.css';
 import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { timeoutRedirect } from '../../helpers/timeout-redirect';
+
 import CartProduct from '../CartProduct';
 
 import Notification from '../Notification';
 
 import {CartContext} from '../../ContextWrapper';
 
-const Cart = () => {
+const Cart = ({
+    history
+}) => {
     const [cartItems, setCartItems] = useContext(CartContext);
     const [boughtProducts, setBoughtProducts] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
@@ -23,10 +27,6 @@ const Cart = () => {
                     .map(([id, record]) => ({id, ...record}));
                 
                 setBoughtProducts(products);
-                /*const total = Object.entries(cartItems).reduce((acc, value) => {
-                    acc += value[1].count * value[1].price;
-                    return acc;
-                }, 0);*/
                 setTotalPrice(getTotalPrice(products));
             }
             catch(e){
@@ -59,10 +59,23 @@ const Cart = () => {
             return 0;
     }
 
+    const Order = async () => {
+        try{
+            //await requester.dataSet.updateEntity(products);
+            setNotification('Ordered!');
+            
+            timeoutRedirect(history, `/products`);
+            setCartItems({});
+        }
+        catch(e){
+            setNotification('Not ordered!');
+        };
+    }
+
     return(
         <section className={style['cart-container']}>
-            <h2>Products in your Cart:</h2>
             <Notification message={notification} />
+            <h2>Products in your Cart:</h2>
             {boughtProducts && boughtProducts.length > 0 ? (boughtProducts.map(x => 
                 <CartProduct key={x.id} {...x} total={getTotalPrice} />
             ) ) : <h3 className={style['cart-empty-message']}>There are no products in your cart!</h3>}
@@ -75,7 +88,7 @@ const Cart = () => {
 
             {boughtProducts.length > 0 ? (
                 <div className={style['button-wrapper']}>
-                <Link to="#"><button>Order</button></Link>
+                <Link to="#"><button onClick={Order}>Order</button></Link>
                 </div>
             ) : ''}
         </section>
