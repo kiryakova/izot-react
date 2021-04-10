@@ -97,6 +97,8 @@ Additionally installed:
 ## Technology stack
 - React.js
 - Firebase - Realtime Database and Authentication
+- Cloudinary
+- Google Maps
 
 
 ## Website of IZOTSERVIZ N.Zagora OOD - sales and service of fiscal devices - Cash registers, Fiscal printers and Electronic scales
