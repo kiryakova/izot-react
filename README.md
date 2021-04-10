@@ -85,7 +85,13 @@ Additionally installed:
 
 ### `npm install cloudinary`
 
+### `npm install cloudinary-react`
+
 ### `npm i styled-components`
+
+### `npm i react-google-maps`
+
+### `npm i react-geocode`
 
 
 ## Technology stack
@@ -100,11 +106,11 @@ Additionally installed:
 2. Login
 3. Logout
 4. Products - all and by categories
-5. Add Product
+5. Add Product (using Cloudinary for image)
 6. Edit Product
 7. Delete Product
 8. Product details
 9. Contacts
 10. Buy Product
 11. Cart
-
+12. Connect to Google Maps

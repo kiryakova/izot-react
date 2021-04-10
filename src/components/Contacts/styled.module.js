@@ -37,8 +37,9 @@ export const TextParagraph = styled.p`
     margin: 5px 0px;
 `;
 
-
-
-
-
+export const MapContainer = styled.div`
+    width: 70%;
+    height: 500px;
+    margin-top: 50px;
+`;
 

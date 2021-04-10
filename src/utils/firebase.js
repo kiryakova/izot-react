@@ -17,17 +17,4 @@ if(!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);
 }
 
-
-/*firebase.auth().onAuthStateChanged((user) => {
-    if(user){
-        console.log("LoggedIn:");
-        console.log(user);
-    }
-    else{
-        console.log("LoggedOut:");
-    }
-});*/
-
 export default firebase;
-
-//export const auth = firebase.auth;
