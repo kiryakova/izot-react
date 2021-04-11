@@ -54,7 +54,8 @@ const FormLogInRegister = ({ formType, errors, onSubmitHandler, handleChangeFiel
 
                 <div className={style['button-wrapper']}>
                     <input className="button" type="submit" value={formType}  />
-                    <Link className="button" to="/products">Cancel</Link>
+                    {(formType=="LogIn") ? (<Link className="button" to="/products">Cancel</Link>) 
+                    : (<Link className="button" to="/login">Cancel</Link>)}
                 </div>
             </form>
     );
